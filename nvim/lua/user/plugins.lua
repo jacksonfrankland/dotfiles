@@ -24,13 +24,14 @@ return require('packer').startup(function(use)
                 telescope = true,
                 nvimtree = true,
                 which_key = true,
+                dashboard = true
             }
         })
     vim.cmd.colorscheme "catppuccin"
 
     -- Commenting support.
     -- Line: gcc
-    -- Selection: gcuuu
+    -- Selection: gc
     -- General: gc<motion>
     use('tpope/vim-commentary')
 
@@ -40,7 +41,7 @@ return require('packer').startup(function(use)
     -- Add: ys<motion><new>
     use('tpope/vim-surround')
 
-    -- Useful commands like :Rename and :SudoWritetter.
+    -- Useful commands like :Rename and :SudoWrite.
     use('tpope/vim-eunuch')
 
     -- Indent autodetection with editorconfig support.
@@ -133,6 +134,36 @@ return require('packer').startup(function(use)
             requires = 'kyazdani42/nvim-web-devicons',
             config = function()
                 require('user/plugins/lualine')
+            end,
+        })
+
+    -- Display indentation lines.
+    use({
+            'lukas-reineke/indent-blankline.nvim',
+            config = function()
+                require('user/plugins/indent-blankline')
+            end,
+        })  
+
+    -- Add a dashboard.
+    use({
+            'glepnir/dashboard-nvim',
+            config = function()
+                require('user/plugins/dashboard-nvim')
+            end
+        })
+
+    -- Git integration.
+    use({
+            'lewis6991/gitsigns.nvim',
+            config = function()
+                require('gitsigns').setup()
+                vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
+                vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
+                vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
+                vim.keymap.set('n', 'gS', ':Gitsigns undo_stage_hunk<CR>')
+                vim.keymap.set('n', 'gp', ':Gitsigns preview_hunk<CR>')
+                vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
             end,
         })
 
