@@ -23,14 +23,14 @@ return require('packer').startup(function(use)
             integrations = {
                 telescope = true,
                 nvimtree = true,
-                which_key = true
+                which_key = true,
             }
         })
     vim.cmd.colorscheme "catppuccin"
 
     -- Commenting support.
     -- Line: gcc
-    -- Selection: gc
+    -- Selection: gcuuu
     -- General: gc<motion>
     use('tpope/vim-commentary')
 
@@ -40,7 +40,7 @@ return require('packer').startup(function(use)
     -- Add: ys<motion><new>
     use('tpope/vim-surround')
 
-    -- Useful commands like :Rename and :SudoWrite.
+    -- Useful commands like :Rename and :SudoWritetter.
     use('tpope/vim-eunuch')
 
     -- Indent autodetection with editorconfig support.
@@ -118,13 +118,22 @@ return require('packer').startup(function(use)
             end,
         })
 
-        -- File tree sidebar
-        use({
-                'kyazdani42/nvim-tree.lua',
-                requires = 'kyazdani42/nvim-web-devicons',
-                config = function()
-                    require('user/plugins/nvim-tree')
-                end,
+    -- File tree sidebar
+    use({
+            'kyazdani42/nvim-tree.lua',
+            requires = 'kyazdani42/nvim-web-devicons',
+            config = function()
+                require('user/plugins/nvim-tree')
+            end,
+        })
+
+    -- A Status line.
+    use({
+            'nvim-lualine/lualine.nvim',
+            requires = 'kyazdani42/nvim-web-devicons',
+            config = function()
+                require('user/plugins/lualine')
+            end,
         })
 
 

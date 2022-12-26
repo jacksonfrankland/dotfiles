@@ -16,9 +16,9 @@ vim.keymap.set('v', 'y', 'myy`y')
 -- Paste replace visual selection without copying it.
 vim.keymap.set('v', 'p', '"_dP')
 
--- Easy insertion of a trailing ; or , from insert mode.
-vim.keymap.set('i', ';;', '<Esc>A;')
-vim.keymap.set('i', ',,', '<Esc>A,')
+-- Easy insertion of a trailing ; or ,
+vim.keymap.set('n', '<Leader>;', 'A;<Esc>', {desc = 'Insert ; to end of line'})
+vim.keymap.set('n', '<Leader>,', 'A,<Esc>', {desc = 'Insert , to end of line'})
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>', {desc = 'Clear search'})
