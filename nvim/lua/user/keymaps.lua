@@ -21,7 +21,7 @@ vim.keymap.set('i', ';;', '<Esc>A;')
 vim.keymap.set('i', ',,', '<Esc>A,')
 
 -- Quickly clear search highlighting.
-vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')
+vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>', {desc = 'Clear search'})
 
 -- Move lines up and down.
 vim.keymap.set('i', '<A-j>', '<Esc>:move .+1<CR>==gi')
@@ -30,3 +30,14 @@ vim.keymap.set('n', '<A-j>', ':move .+1<CR>==')
 vim.keymap.set('n', '<A-k>', ':move .-2<CR>==')
 vim.keymap.set('v', '<A-j>', ":move '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
+
+-- Reindent
+vim.keymap.set('n', '<Leader>=', 'mfggVG===`f', {desc = 'Reindent'})
+
+-- Insert empty line above or below
+vim.keymap.set('n', '<Leader>o', 'moo<Esc>0d$`o', {desc = 'Insert empty line below'})
+vim.keymap.set('n', '<Leader>O', 'moO<Esc>0d$`o', {desc = 'Insert empty line above'})
+
+-- Common commands
+vim.keymap.set('n', '<Leader>w', ':w<CR>', {desc = 'Save'})
+vim.keymap.set('n', '<Leader>q', ':qa<CR>', {desc = 'Quit'})
