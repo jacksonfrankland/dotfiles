@@ -2,6 +2,9 @@ require('nvim-tree').setup({
         git = {
             ignore = false,
         },
+        view = {
+            width = 45
+        },
         renderer = {
             group_empty = true,
             icons = {
@@ -13,6 +16,11 @@ require('nvim-tree').setup({
                 enable = false,
             },
         },
+        actions = {
+            open_file = {
+                quit_on_open = true
+            }
+        }
     })
 
-vim.keymap.set('n', '<Leader>n', ':NvimTreeFocus<CR>', {desc = 'Toggle file tree'})
+vim.keymap.set('n', '<Leader>n', ':NvimTreeCollapse<CR>:NvimTreeFindFileToggle<CR>', {desc = 'Open file tree'})
