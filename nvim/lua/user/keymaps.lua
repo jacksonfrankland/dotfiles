@@ -31,9 +31,6 @@ vim.keymap.set('n', '<A-k>', ':move .-2<CR>==')
 vim.keymap.set('v', '<A-j>', ":move '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
 
--- Auto save
-vim.keymap.set({'n', 'i'}, '<Esc>', '<Esc>:w<CR>')
-
 -- Reindent
 vim.keymap.set('n', '<Leader>=', 'mfggVG===`f', {desc = 'Reindent'})
 

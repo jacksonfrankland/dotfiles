@@ -24,7 +24,8 @@ return require('packer').startup(function(use)
                 telescope = true,
                 nvimtree = true,
                 which_key = true,
-                dashboard = true
+                dashboard = true,
+                leap = true
             }
         })
     vim.cmd.colorscheme "catppuccin"
@@ -167,6 +168,75 @@ return require('packer').startup(function(use)
             end,
         })
 
+    -- Git commands.
+    use({
+            'tpope/vim-fugitive',
+            requires = 'tpope/vim-rhubarb',
+        })
+
+    --- Floating terminal.
+    use({
+            'voldikss/vim-floaterm',
+            config = function()
+                vim.g.floaterm_width = 0.8
+                vim.g.floaterm_height = 0.8
+                vim.keymap.set('n', '<Leader>p', ':FloatermToggle<CR>')
+                vim.keymap.set('t', '<Leader>p', '<C-\\><C-n>:FloatermToggle<CR>')
+                vim.cmd([[
+      highlight link Floaterm CursorLine
+      highlight link FloatermBorder CursorLineBg
+    ]])
+            end
+        })
+
+    -- Improved syntax highlighting
+    use({
+            'nvim-treesitter/nvim-treesitter',
+            run = function()
+                require('nvim-treesitter.install').update({ with_sync = true })
+            end,
+            requires = {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+                'nvim-treesitter/nvim-treesitter-textobjects',
+            },
+            config = function()
+                require('user/plugins/treesitter')
+            end,
+        })
+
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        requires = {
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-buffer'},
+            {'hrsh7th/cmp-path'},
+            {'saadparwaiz1/cmp_luasnip'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lua'},
+
+            -- Snippets
+            {'L3MON4D3/LuaSnip'},
+            {'rafamadriz/friendly-snippets'},
+        },
+        config = function()
+            require('user/plugins/lsp')
+        end
+    }
+
+    -- Testing helper
+    use({
+            'vim-test/vim-test',
+            config = function()
+                require('user/plugins/vim-test')
+            end,
+        })
+
 
     -- Allow key helper popups
     use {
@@ -179,6 +249,24 @@ return require('packer').startup(function(use)
         end
     }
     vim.opt.timeoutlen = 500
+
+    -- Motion for easy navigation
+    use({
+            'ggandor/leap.nvim',
+            requires = 'tpope/vim-repeat',
+        })
+    require('leap').add_default_mappings()
+
+    -- Autosave
+    use({
+	"Pocco81/auto-save.nvim",
+	config = function()
+		 require("auto-save").setup {
+			-- your config goes here
+			-- or just leave it empty :)
+		 }
+	end,
+})
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
