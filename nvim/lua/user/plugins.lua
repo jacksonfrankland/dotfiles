@@ -1,8 +1,8 @@
 local ensure_packer = function()
     local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
         vim.cmd [[packadd packer.nvim]]
         return true
     end
@@ -19,15 +19,15 @@ return require('packer').startup(function(use)
     -- Theme
     use { "catppuccin/nvim", as = "catppuccin" }
     require("catppuccin").setup({
-            flavour = "macchiato",
-            integrations = {
-                telescope = true,
-                nvimtree = true,
-                which_key = true,
-                dashboard = true,
-                leap = true
-            }
-        })
+        flavour = "macchiato",
+        integrations = {
+            telescope = true,
+            nvimtree = true,
+            which_key = true,
+            dashboard = true,
+            leap = true
+        }
+    })
     vim.cmd.colorscheme "catppuccin"
 
     -- Commenting support.
@@ -68,161 +68,161 @@ return require('packer').startup(function(use)
 
     -- Text objects for HTML attributes.
     use({
-            'whatyouhide/vim-textobj-xmlattr',
-            requires = 'kana/vim-textobj-user',
-        })
+        'whatyouhide/vim-textobj-xmlattr',
+        requires = 'kana/vim-textobj-user',
+    })
 
     -- Automatically add closing brackets, quotes, etc.
     use({
-            'windwp/nvim-autopairs',
-            config = function()
-                require('nvim-autopairs').setup()
-            end,
-        })
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup()
+        end,
+    })
 
     -- Add smooth scrolling to avoid jarring jumps
     use({
-            'karb94/neoscroll.nvim',
-            config = function()
-                require('neoscroll').setup()
-            end,
-        })
+        'karb94/neoscroll.nvim',
+        config = function()
+            require('neoscroll').setup()
+        end,
+    })
 
     -- Split arrays and methods onto multiple lines, or join them back up.
     use({
-            'AndrewRadev/splitjoin.vim',
-            config = function()
-                vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
-                vim.g.splitjoin_trailing_comma = 1
-                vim.g.splitjoin_php_method_chain_full = 1
-            end,
-        })
+        'AndrewRadev/splitjoin.vim',
+        config = function()
+            vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
+            vim.g.splitjoin_trailing_comma = 1
+            vim.g.splitjoin_php_method_chain_full = 1
+        end,
+    })
 
     -- Automatically fix indentation when pasting code.
     use({
-            'sickill/vim-pasta',
-            config = function()
-                vim.g.pasta_disabled_filetypes = { 'fugitive' }
-            end,
-        })
+        'sickill/vim-pasta',
+        config = function()
+            vim.g.pasta_disabled_filetypes = { 'fugitive' }
+        end,
+    })
 
     -- Fuzzy finder
     use({
-            'nvim-telescope/telescope.nvim',
-            requires = {
-                'nvim-lua/plenary.nvim',
-                'kyazdani42/nvim-web-devicons',
-                'nvim-telescope/telescope-live-grep-args.nvim',
-                { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            },
-            config = function()
-                require('user/plugins/telescope')
-            end,
-        })
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'kyazdani42/nvim-web-devicons',
+            'nvim-telescope/telescope-live-grep-args.nvim',
+            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        },
+        config = function()
+            require('user/plugins/telescope')
+        end,
+    })
 
     -- File tree sidebar
     use({
-            'kyazdani42/nvim-tree.lua',
-            requires = 'kyazdani42/nvim-web-devicons',
-            config = function()
-                require('user/plugins/nvim-tree')
-            end,
-        })
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('user/plugins/nvim-tree')
+        end,
+    })
 
     -- A Status line.
     use({
-            'nvim-lualine/lualine.nvim',
-            requires = 'kyazdani42/nvim-web-devicons',
-            config = function()
-                require('user/plugins/lualine')
-            end,
-        })
+        'nvim-lualine/lualine.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('user/plugins/lualine')
+        end,
+    })
 
     -- Display indentation lines.
     use({
-            'lukas-reineke/indent-blankline.nvim',
-            config = function()
-                require('user/plugins/indent-blankline')
-            end,
-        })  
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require('user/plugins/indent-blankline')
+        end,
+    })
 
     -- Add a dashboard.
     use({
-            'glepnir/dashboard-nvim',
-            config = function()
-                require('user/plugins/dashboard-nvim')
-            end
-        })
+        'glepnir/dashboard-nvim',
+        config = function()
+            require('user/plugins/dashboard-nvim')
+        end
+    })
 
     -- Git integration.
     use({
-            'lewis6991/gitsigns.nvim',
-            config = function()
-                require('gitsigns').setup()
-                vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
-                vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
-                vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
-                vim.keymap.set('n', 'gS', ':Gitsigns undo_stage_hunk<CR>')
-                vim.keymap.set('n', 'gp', ':Gitsigns preview_hunk<CR>')
-                vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
-            end,
-        })
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+            vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
+            vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
+            vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
+            vim.keymap.set('n', 'gS', ':Gitsigns undo_stage_hunk<CR>')
+            vim.keymap.set('n', 'gp', ':Gitsigns preview_hunk<CR>')
+            vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
+        end,
+    })
 
     -- Git commands.
     use({
-            'tpope/vim-fugitive',
-            requires = 'tpope/vim-rhubarb',
-        })
+        'tpope/vim-fugitive',
+        requires = 'tpope/vim-rhubarb',
+    })
 
     --- Floating terminal.
     use({
-            'voldikss/vim-floaterm',
-            config = function()
-                vim.g.floaterm_width = 0.8
-                vim.g.floaterm_height = 0.8
-                vim.keymap.set('n', '<Leader>p', ':FloatermToggle<CR>')
-                vim.keymap.set('t', '<Leader>p', '<C-\\><C-n>:FloatermToggle<CR>')
-                vim.cmd([[
+        'voldikss/vim-floaterm',
+        config = function()
+            vim.g.floaterm_width = 0.8
+            vim.g.floaterm_height = 0.8
+            vim.keymap.set('n', '<Leader>p', ':FloatermToggle<CR>')
+            vim.keymap.set('t', '<Leader>p', '<C-\\><C-n>:FloatermToggle<CR>')
+            vim.cmd([[
       highlight link Floaterm CursorLine
       highlight link FloatermBorder CursorLineBg
-    ]])
-            end
-        })
+    ]]       )
+        end
+    })
 
     -- Improved syntax highlighting
     use({
-            'nvim-treesitter/nvim-treesitter',
-            run = function()
-                require('nvim-treesitter.install').update({ with_sync = true })
-            end,
-            requires = {
-                'JoosepAlviste/nvim-ts-context-commentstring',
-                'nvim-treesitter/nvim-treesitter-textobjects',
-            },
-            config = function()
-                require('user/plugins/treesitter')
-            end,
-        })
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            require('nvim-treesitter.install').update({ with_sync = true })
+        end,
+        requires = {
+            'JoosepAlviste/nvim-ts-context-commentstring',
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
+        config = function()
+            require('user/plugins/treesitter')
+        end,
+    })
 
     use {
         'VonHeikemen/lsp-zero.nvim',
         requires = {
             -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
 
             -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-path'},
-            {'saadparwaiz1/cmp_luasnip'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lua'},
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-nvim-lua' },
 
             -- Snippets
-            {'L3MON4D3/LuaSnip'},
-            {'rafamadriz/friendly-snippets'},
+            { 'L3MON4D3/LuaSnip' },
+            { 'rafamadriz/friendly-snippets' },
         },
         config = function()
             require('user/plugins/lsp')
@@ -231,11 +231,11 @@ return require('packer').startup(function(use)
 
     -- Testing helper
     use({
-            'vim-test/vim-test',
-            config = function()
-                require('user/plugins/vim-test')
-            end,
-        })
+        'vim-test/vim-test',
+        config = function()
+            require('user/plugins/vim-test')
+        end,
+    })
 
 
     -- Allow key helper popups
@@ -252,21 +252,24 @@ return require('packer').startup(function(use)
 
     -- Motion for easy navigation
     use({
-            'ggandor/leap.nvim',
-            requires = 'tpope/vim-repeat',
-        })
+        'ggandor/leap.nvim',
+        requires = 'tpope/vim-repeat',
+    })
     require('leap').add_default_mappings()
+    require('leap').opts.safe_labels = {}
 
     -- Autosave
     use({
-	"Pocco81/auto-save.nvim",
-	config = function()
-		 require("auto-save").setup {
-			-- your config goes here
-			-- or just leave it empty :)
-		 }
-	end,
-})
+        "Pocco81/auto-save.nvim",
+        config = function()
+            require("auto-save").setup {
+                -- your config goes here
+                -- or just leave it empty :)
+            }
+        end,
+    })
+
+    use "mg979/vim-visual-multi"
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
@@ -274,4 +277,3 @@ return require('packer').startup(function(use)
         require('packer').sync()
     end
 end)
-
