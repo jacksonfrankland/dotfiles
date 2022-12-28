@@ -25,7 +25,8 @@ return require('packer').startup(function(use)
             nvimtree = true,
             which_key = true,
             dashboard = true,
-            leap = true
+            leap = true,
+            mason = true
         }
     })
     vim.cmd.colorscheme "catppuccin"
@@ -249,6 +250,7 @@ return require('packer').startup(function(use)
         end
     }
     vim.opt.timeoutlen = 500
+    require('which-key.plugins.presets').operators['v'] = nil
 
     -- Motion for easy navigation
     use({
