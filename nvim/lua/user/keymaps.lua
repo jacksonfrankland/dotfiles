@@ -31,8 +31,9 @@ vim.keymap.set('n', '<A-k>', ':move .-2<CR>==')
 vim.keymap.set('v', '<A-j>', ":move '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
 
--- Reindent
-vim.keymap.set('n', '<Leader>=', ':set shiftwidth=4<CR>:LspZeroFormat<CR>', { desc = 'Format' })
+-- Formatting
+vim.keymap.set('n', '<Leader>=', ':LspZeroFormat<CR>', { desc = 'Format' })
+vim.keymap.set('n', '<Leader>+', ':set shiftwidth=4<CR>:LspZeroFormat<CR>', { desc = 'Format with reindenting to 4 spaces' })
 
 -- Insert empty line above or below
 vim.keymap.set('n', '<Leader>o', 'moo<Esc>0d$`o', { desc = 'Insert empty line below' })
@@ -41,3 +42,8 @@ vim.keymap.set('n', '<Leader>O', 'moO<Esc>0d$`o', { desc = 'Insert empty line ab
 -- Common commands
 vim.keymap.set('n', '<Leader>w', ':w<CR>', { desc = 'Save' })
 vim.keymap.set('n', '<Leader>q', ':qa<CR>', { desc = 'Quit' })
+
+-- Replace commands
+vim.keymap.set('n', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Replace in line' })
+vim.keymap.set('n', '<Leader>R', ':%s//&/g<Left><Left><Left><Left>', { desc = 'Replace in whole buffer' })
+vim.keymap.set('v', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Replace in selection' })

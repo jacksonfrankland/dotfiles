@@ -54,4 +54,5 @@ vim.keymap.set('n', '<leader>F', [[<cmd>lua require('telescope.builtin').find_fi
 vim.keymap.set('n', '<leader>b', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {desc = 'Find buffer'})
 vim.keymap.set('n', '<leader>g', [[<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>]], {desc = 'Grep in files'})
 vim.keymap.set('n', '<leader>h', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], {desc = 'Find file in history'})
-vim.keymap.set('n', '<leader>s', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], {desc = 'Find symbol'})
+vim.keymap.set('n', '<leader>s', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], {desc = 'Find symbol in buffer'})
+vim.keymap.set('n', '<leader>S', [[<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>]], {desc = 'Find symbol in workspace'})

@@ -90,6 +90,8 @@ return require('packer').startup(function(use)
     })
 
     -- Split arrays and methods onto multiple lines, or join them back up.
+    -- gS: split into multiple lines
+    -- gJ: join into one line
     use({
         'AndrewRadev/splitjoin.vim',
         config = function()
@@ -238,6 +240,11 @@ return require('packer').startup(function(use)
         end,
     })
 
+    use { "johmsalas/text-case.nvim",
+        config = function()
+            require('textcase').setup {}
+        end
+    }
 
     -- Allow key helper popups
     use {
@@ -271,7 +278,7 @@ return require('packer').startup(function(use)
         end,
     })
 
-    use "mg979/vim-visual-multi"
+    use 'michaeljsmith/vim-indent-object'
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
