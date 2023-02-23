@@ -17,8 +17,8 @@ vim.keymap.set('v', 'y', 'myy`y')
 vim.keymap.set('v', 'p', '"_dP')
 
 -- Easy insertion of a trailing ; or ,
-vim.keymap.set('n', '<Leader>;', 'A;<Esc>', { desc = 'Insert ; to end of line' })
-vim.keymap.set('n', '<Leader>,', 'A,<Esc>', { desc = 'Insert , to end of line' })
+vim.keymap.set('n', '<Leader>;', 'maA;<Esc>`a', { desc = 'Insert ; to end of line' })
+vim.keymap.set('n', '<Leader>,', 'maA,<Esc>`a', { desc = 'Insert , to end of line' })
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>', { desc = 'Clear search' })
@@ -33,7 +33,8 @@ vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
 
 -- Formatting
 vim.keymap.set('n', '<Leader>=', ':LspZeroFormat<CR>', { desc = 'Format' })
-vim.keymap.set('n', '<Leader>+', ':set shiftwidth=4<CR>:LspZeroFormat<CR>', { desc = 'Format with reindenting to 4 spaces' })
+vim.keymap.set('n', '<Leader>+', ':set tabstop=4<CR>:set shiftwidth=4<CR>:LspZeroFormat<CR>', { desc = 'Format with reindenting to 4 spaces' })
+-- For json minifying use :%!jq -c
 
 -- Insert empty line above or below
 vim.keymap.set('n', '<Leader>o', 'moo<Esc>0d$`o', { desc = 'Insert empty line below' })
@@ -47,3 +48,6 @@ vim.keymap.set('n', '<Leader>q', ':qa<CR>', { desc = 'Quit' })
 vim.keymap.set('n', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Replace in line' })
 vim.keymap.set('n', '<Leader>R', ':%s//&/g<Left><Left><Left><Left>', { desc = 'Replace in whole buffer' })
 vim.keymap.set('v', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Replace in selection' })
+
+-- Window commands
+vim.keymap.set('n', '<C-w>o', ':only<CR>', {desc = 'Quit other windows' })
