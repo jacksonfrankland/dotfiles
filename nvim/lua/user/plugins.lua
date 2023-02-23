@@ -152,6 +152,7 @@ return require('packer').startup(function(use)
     -- Add a dashboard.
     use({
         'glepnir/dashboard-nvim',
+        commit = '611a611e4c6733fe3485a1f014d9a78522e98d59',
         config = function()
             require('user/plugins/dashboard-nvim')
         end
