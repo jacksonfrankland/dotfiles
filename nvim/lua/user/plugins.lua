@@ -227,6 +227,8 @@ return require('packer').startup(function(use)
             -- Snippets
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
+
+            { 'jose-elias-alvarez/null-ls.nvim' },
         },
         config = function()
             require('user/plugins/lsp')

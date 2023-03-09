@@ -10,5 +10,17 @@ lsp.setup_nvim_cmp({
     }
 })
 
+local null_ls = require('null-ls')
+local null_opts = lsp.build_options('null-ls', {})
+
+null_ls.setup({
+    on_attach = null_opts.on_attach,
+    sources = {
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.diagnostics.eslint
+    }
+})
+
+
 lsp.setup()
 vim.keymap.set('n', '<Leader>i', ':lua vim.lsp.buf.code_action()<CR>', { desc = 'Code actions' })
