@@ -51,3 +51,8 @@ vim.keymap.set('v', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Re
 
 -- Window commands
 vim.keymap.set('n', '<C-w>o', ':only<CR>', {desc = 'Quit other windows' })
+
+-- diagnostics
+vim.api.nvim_set_keymap('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'See diagnostics', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic', noremap = true, silent = true })
