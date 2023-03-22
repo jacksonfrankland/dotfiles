@@ -47,7 +47,7 @@ return require('packer').startup(function(use)
     use('tpope/vim-eunuch')
 
     -- Indent autodetection with editorconfig support.
-    use('tpope/vim-sleuth')
+    -- use('tpope/vim-sleuth')
 
     -- Allow plugins to enable repeating of commands.
     use('tpope/vim-repeat')
@@ -162,7 +162,9 @@ return require('packer').startup(function(use)
     use({
         'lewis6991/gitsigns.nvim',
         config = function()
-            require('gitsigns').setup()
+            require('gitsigns').setup({
+                current_line_blame = true
+            })
             vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
             vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
             vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
@@ -189,7 +191,7 @@ return require('packer').startup(function(use)
             vim.cmd([[
       highlight link Floaterm CursorLine
       highlight link FloatermBorder CursorLineBg
-    ]]       )
+    ]])
         end
     })
 
