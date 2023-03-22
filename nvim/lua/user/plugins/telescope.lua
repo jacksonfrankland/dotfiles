@@ -1,5 +1,21 @@
 local actions = require('telescope.actions')
 
+local previewers = require('telescope.previewers')
+
+local new_maker = function(filepath, bufnr, opts)
+    opts = opts or {}
+
+    filepath = vim.fn.expand(filepath)
+    vim.loop.fs_stat(filepath, function(_, stat)
+        if not stat then return end
+        if stat.size > 100000 then
+            return
+        else
+            previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        end
+    end)
+end
+
 vim.cmd([[
   highlight link TelescopePromptTitle PMenuSel
   highlight link TelescopePreviewTitle PMenuSel
@@ -14,6 +30,7 @@ require('telescope').setup({
         path_display = { truncate = 1 },
         prompt_prefix = '   ',
         selection_caret = '  ',
+        buffer_previewer_maker = new_maker,
         layout_config = {
             prompt_position = 'top',
         },
@@ -26,13 +43,6 @@ require('telescope').setup({
             },
         },
         file_ignore_patterns = { '.git/' },
-        preview = {
-            filesize_hook = function(filepath, bufnr, opts)
-                local max_bytes = 5000
-                local cmd = { "head", "-c", max_bytes, filepath }
-                require('telescope.previewers.utils').job_maker(cmd, bufnr, opts)
-            end
-        }
     },
     pickers = {
         find_files = {
