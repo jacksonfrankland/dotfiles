@@ -1,0 +1,66 @@
+theme = "catppuccin_macchiato"
+
+[editor]
+line-number = "relative"
+true-color = true
+undercurl = true
+color-modes = true
+cursorline = true
+auto-save = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.lsp]
+display-messages = true
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+right = ["diagnostics", "version-control", "position", "file-encoding"]
+
+[keys.normal]
+esc = ["collapse_selection", "keep_primary_selection", ":w"]
+y = "yank_joined_to_clipboard"
+p = "paste_clipboard_after"
+P = "paste_clipboard_before"
+d = ["yank_joined_to_clipboard", "delete_selection"]
+
+[keys.select]
+esc = ["normal_mode", "collapse_selection", "keep_primary_selection", ":w"]
+y = "yank_joined_to_clipboard"
+p = "paste_clipboard_after"
+P = "paste_clipboard_before"
+
+[keys.insert]
+esc = [":w", "normal_mode"]
+
+[keys.normal.space]
+"," = [
+    "save_selection",
+    "goto_line_end",
+    ":append-output echo ','",
+    "collapse_selection",
+    "delete_selection",
+    "jump_backward",
+]
+";" = [
+    "save_selection",
+    "goto_line_end",
+    ":append-output echo ';'",
+    "collapse_selection",
+    "delete_selection",
+    "jump_backward",
+]
+
+[editor.indent-guides]
+render = true
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+tab = "→"

@@ -20,3 +20,5 @@ ln -s "$DOTFILES/scripts/t" "$HOME/.local/bin/t"
 rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
+rm -rf "$HOME/.config/helix"
+ln -s "$DOTFILES/helix" "$HOME/.config/helix"
