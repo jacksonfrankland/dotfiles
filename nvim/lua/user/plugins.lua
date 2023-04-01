@@ -116,6 +116,7 @@ return require('packer').startup(function(use)
             'nvim-lua/plenary.nvim',
             'kyazdani42/nvim-web-devicons',
             'nvim-telescope/telescope-live-grep-args.nvim',
+            'johmsalas/text-case.nvim',
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         },
         config = function()
@@ -181,19 +182,19 @@ return require('packer').startup(function(use)
     })
 
     --- Floating terminal.
-    use({
-        'voldikss/vim-floaterm',
-        config = function()
-            vim.g.floaterm_width = 0.8
-            vim.g.floaterm_height = 0.8
-            vim.keymap.set('n', '<Leader>p', ':FloatermToggle<CR>')
-            vim.keymap.set('t', '<Leader>p', '<C-\\><C-n>:FloatermToggle<CR>')
-            vim.cmd([[
-      highlight link Floaterm CursorLine
-      highlight link FloatermBorder CursorLineBg
-    ]])
-        end
-    })
+    -- use({
+    --     'voldikss/vim-floaterm',
+    --     config = function()
+    --         vim.g.floaterm_width = 0.8
+    --         vim.g.floaterm_height = 0.8
+    --         -- vim.keymap.set('n', '<Leader>p', ':FloatermToggle<CR>')
+    --         -- vim.keymap.set('t', '<Leader>p', '<C-\\><C-n>:FloatermToggle<CR>')
+    --         vim.cmd([[
+    --   highlight link Floaterm CursorLine
+    --   highlight link FloatermBorder CursorLineBg
+    -- ]])
+    --     end
+    -- })
 
     -- Improved syntax highlighting
     use({
@@ -236,6 +237,11 @@ return require('packer').startup(function(use)
             require('user/plugins/lsp')
         end
     }
+
+    use({
+        'weilbith/nvim-code-action-menu',
+        cmd = 'CodeActionMenu',
+    })
 
     -- Testing helper
     use({
@@ -283,7 +289,37 @@ return require('packer').startup(function(use)
         end,
     })
 
+    use({
+        'phpactor/phpactor',
+        ft = 'php',
+        run = 'composer install --no-dev --optimize-autoloader',
+        config = function()
+        end,
+    })
+
+
     use 'michaeljsmith/vim-indent-object'
+
+    use {
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("todo-comments").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end
+    }
+
+    vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next()
+    end, { desc = "Next todo comment" })
+
+    vim.keymap.set("n", "[t", function()
+        require("todo-comments").jump_prev()
+    end, { desc = "Previous todo comment" })
+
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

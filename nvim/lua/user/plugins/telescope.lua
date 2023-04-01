@@ -1,3 +1,8 @@
+require('textcase').setup {}
+  require('telescope').load_extension('textcase')
+  vim.api.nvim_set_keymap('n', '<leader>c', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Change case" })
+  vim.api.nvim_set_keymap('v', '<leader>c', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Change case" })
+
 local actions = require('telescope.actions')
 
 local previewers = require('telescope.previewers')

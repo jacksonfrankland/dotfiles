@@ -33,7 +33,8 @@ vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
 
 -- Formatting
 vim.keymap.set('n', '<Leader>=', ':LspZeroFormat<CR>', { desc = 'Format' })
-vim.keymap.set('n', '<Leader>+', ':set tabstop=4<CR>:set shiftwidth=4<CR>:LspZeroFormat<CR>', { desc = 'Format with reindenting to 4 spaces' })
+vim.keymap.set('n', '<Leader>+', ':set tabstop=4<CR>:set shiftwidth=4<CR>:LspZeroFormat<CR>',
+    { desc = 'Format with reindenting to 4 spaces' })
 -- For json minifying use :%!jq -c
 
 -- Insert empty line above or below
@@ -50,9 +51,8 @@ vim.keymap.set('n', '<Leader>R', ':%s//&/g<Left><Left><Left><Left>', { desc = 'R
 vim.keymap.set('v', '<Leader>r', ':s//&/g<Left><Left><Left><Left>', { desc = 'Replace in selection' })
 
 -- Window commands
-vim.keymap.set('n', '<C-w>o', ':only<CR>', {desc = 'Quit other windows' })
+vim.keymap.set('n', '<C-w>o', ':only<CR>', { desc = 'Quit other windows' })
 
--- diagnostics
-vim.api.nvim_set_keymap('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'See diagnostics', noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic', noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic', noremap = true, silent = true })
+vim.keymap.set('n', '<Leader>x', ':TodoTelescope<CR>', { desc = 'Todos' })
+
+vim.keymap.set('n', '<Leader>p', ':PhpactorContextMenu<CR>', { desc = 'Phpactor Context menu' })
