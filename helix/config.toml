@@ -32,6 +32,7 @@ P = "paste_clipboard_before"
 d = ["yank_joined_to_clipboard", "delete_selection"]
 ";" = "flip_selections"
 "," = "repeat_last_motion"
+C-f = [":new", ":insert-output lf-pick", ":theme default", "select_all", "split_selection_on_newline", "goto_file", "goto_last_modified_file", ":buffer-close!", ":theme catppuccin_macchiato"]
 
 [keys.select]
 pageup = "half_page_up"

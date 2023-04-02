@@ -17,6 +17,11 @@ mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/t"
 ln -s "$DOTFILES/scripts/t" "$HOME/.local/bin/t"
 
+mkdir -p "$HOME/.local/bin"
+rm -rf "$HOME/.local/bin/lf-pick"
+ln -s "$DOTFILES/scripts/lf-pick" "$HOME/.local/bin/lf-pick"
+
+
 rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
