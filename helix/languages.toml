@@ -6,11 +6,14 @@ indent = { tab-width = 4, unit = " " }
 name = "vue"
 indent = { tab-width = 4, unit = " " }
 
-
 [[language]]
 name = "svelte"
 indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "toml"
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = "bash"
 indent = { tab-width = 4, unit = " " }
