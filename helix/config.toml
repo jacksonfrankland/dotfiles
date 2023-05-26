@@ -7,6 +7,7 @@ undercurl = true
 color-modes = true
 cursorline = true
 auto-save = true
+idle-timeout = 0
 # gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 gutters = ["diagnostics", "spacer", "diff", "line-numbers", "spacer", "spacer"]
 
@@ -15,6 +16,7 @@ insert = "bar"
 
 [editor.lsp]
 display-messages = true
+# display-inlay-hints = true
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -22,25 +24,41 @@ mode.insert = "INSERT"
 mode.select = "SELECT"
 right = ["diagnostics", "version-control", "position", "file-encoding"]
 
+[editor.indent-guides]
+render = true
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+tab = "→"
+
+[editor.file-picker]
+hidden = false
+
 [keys.normal]
 pageup = "half_page_up"
 pagedown = "half_page_down"
 esc = ["collapse_selection", "keep_primary_selection", ":w"]
 y = "yank_joined_to_clipboard"
-p = "paste_clipboard_after"
-P = "paste_clipboard_before"
-d = ["yank_joined_to_clipboard", "delete_selection"]
+p = ["paste_clipboard_after", ":w"]
+P = ["replace_selections_with_clipboard", ":w"]
+d = ["yank_joined_to_clipboard", "delete_selection", ":w"]
+x = ["extend_line_below", "select_mode"]
 ";" = "flip_selections"
 "," = "repeat_last_motion"
-C-f = [":new", ":insert-output lf-pick", ":theme default", "select_all", "split_selection_on_newline", "goto_file", "goto_last_modified_file", ":buffer-close!", ":theme catppuccin_macchiato"]
 
 [keys.select]
 pageup = "half_page_up"
 pagedown = "half_page_down"
 esc = ["normal_mode", "collapse_selection", "keep_primary_selection", ":w"]
 y = "yank_joined_to_clipboard"
-p = "paste_clipboard_after"
-P = "paste_clipboard_before"
+p = ["replace_selections_with_clipboard", ":w"]
+P = ["replace_selections_with_clipboard", ":w"]
+d = ["yank_joined_to_clipboard", "delete_selection", ":w"]
+c = ["trim_selections", "change_selection"]
 ";" = "flip_selections"
 "," = "repeat_last_motion"
 
@@ -66,14 +84,7 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
-
-[editor.indent-guides]
-render = true
-
-[editor.whitespace.render]
-space = "none"
-tab = "all"
-newline = "none"
-
-[editor.whitespace.characters]
-tab = "→"
+F = "file_picker_in_current_buffer_directory"
+"." = ":toggle-option file-picker.git-ignore"
+"=" = ":format"
+"+" = ":indent-style 4"

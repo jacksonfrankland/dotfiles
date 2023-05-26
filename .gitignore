@@ -1,2 +1,4 @@
 
 nvim/plugin/packer_compiled.lua
+
+helix/runtime

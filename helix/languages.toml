@@ -3,8 +3,25 @@ name = "javascript"
 indent = { tab-width = 4, unit = " " }
 
 [[language]]
+name = "typescript"
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = "json"
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
 name = "vue"
 indent = { tab-width = 4, unit = " " }
+auto-format = false
+file-types = ["vue"]
+injection-regex = "vue"
+language-server = { command = "vuelsp" }
+roots = ["package.json"]
+scope = "text.html.vue"
+
+[language.config.typescript]
+tsdk = "/Users/jacksonfrankland/.nvm/versions/node/v16.19.0/lib/node_modules/typescript/lib"
 
 [[language]]
 name = "svelte"
@@ -16,4 +33,8 @@ indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "bash"
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = "php"
 indent = { tab-width = 4, unit = " " }

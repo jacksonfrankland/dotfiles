@@ -21,6 +21,9 @@ mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/lf-pick"
 ln -s "$DOTFILES/scripts/lf-pick" "$HOME/.local/bin/lf-pick"
 
+mkdir -p "$HOME/.local/bin"
+rm -rf "$HOME/.local/bin/vuelsp"
+ln -s "$DOTFILES/scripts/vuelsp" "$HOME/.local/bin/vuelsp"
 
 rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
