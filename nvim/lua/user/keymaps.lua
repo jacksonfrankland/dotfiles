@@ -56,3 +56,7 @@ vim.keymap.set('n', '<C-w>o', ':only<CR>', { desc = 'Quit other windows' })
 vim.keymap.set('n', '<Leader>x', ':TodoTelescope<CR>', { desc = 'Todos' })
 
 vim.keymap.set('n', '<Leader>p', ':PhpactorContextMenu<CR>', { desc = 'Phpactor Context menu' })
+
+-- Tabs
+vim.keymap.set('n', ']t', ':tabnext<CR>', { desc = 'Next tab' })
+vim.keymap.set('n', '[t', ':tabprevious<CR>', { desc = 'Previous tab' })

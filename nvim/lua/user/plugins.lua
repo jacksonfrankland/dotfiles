@@ -312,11 +312,11 @@ return require('packer').startup(function(use)
         end
     }
 
-    vim.keymap.set("n", "]t", function()
+    vim.keymap.set("n", "]x", function()
         require("todo-comments").jump_next()
     end, { desc = "Next todo comment" })
 
-    vim.keymap.set("n", "[t", function()
+    vim.keymap.set("n", "[x", function()
         require("todo-comments").jump_prev()
     end, { desc = "Previous todo comment" })
 
