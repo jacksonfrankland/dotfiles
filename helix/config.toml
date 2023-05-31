@@ -6,9 +6,9 @@ true-color = true
 undercurl = true
 color-modes = true
 cursorline = true
-auto-save = true
+auto-save = true # save when window looses focus
 idle-timeout = 0
-# gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+# original gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 gutters = ["diagnostics", "spacer", "diff", "line-numbers", "spacer", "spacer"]
 
 [editor.cursor-shape]
@@ -36,29 +36,29 @@ newline = "none"
 tab = "→"
 
 [editor.file-picker]
-hidden = false
+hidden = false # show hidden files as in starting with a dot
+git-global = false # show files hidden by git globally
 
 [keys.normal]
 pageup = "half_page_up"
 pagedown = "half_page_down"
-esc = ["collapse_selection", "keep_primary_selection", ":w"]
-y = "yank_joined_to_clipboard"
+esc = ["collapse_selection", "keep_primary_selection", ":w"] # remove additional cursors and selections
+y = "yank_joined_to_clipboard" # use my system clipboard
 p = ["paste_clipboard_after", ":w"]
-P = ["replace_selections_with_clipboard", ":w"]
-d = ["yank_joined_to_clipboard", "delete_selection", ":w"]
-x = ["extend_line_below", "select_mode"]
+P = ["replace_selections_with_clipboard", ":w"] # paste over selection
+d = ["yank_joined_to_clipboard", "delete_selection", ":w"] # add deleted text to system clipboaard
+x = ["extend_line_below", "select_mode"] # go into select mode when you select line. This lets you undo going to far with x as well as more expected "c" behavour when combined with my select "c" mapping
 ";" = "flip_selections"
 "," = "repeat_last_motion"
 
 [keys.select]
 pageup = "half_page_up"
 pagedown = "half_page_down"
-esc = ["normal_mode", "collapse_selection", "keep_primary_selection", ":w"]
 y = "yank_joined_to_clipboard"
-p = ["replace_selections_with_clipboard", ":w"]
+p = ["replace_selections_with_clipboard", ":w"] # in select mode I always want to paste over my selection
 P = ["replace_selections_with_clipboard", ":w"]
-d = ["yank_joined_to_clipboard", "delete_selection", ":w"]
-c = ["trim_selections", "change_selection"]
+d = ["yank_joined_to_clipboard", "delete_selection", ":w"] # add deleted text to system clipboaard
+c = ["trim_selections", "change_selection"] # when changing a line this stops the cursor moving to the beginning of the line underneath
 ";" = "flip_selections"
 "," = "repeat_last_motion"
 
@@ -68,6 +68,7 @@ pagedown = "half_page_down"
 esc = [":w", "normal_mode"]
 
 [keys.normal.space]
+# Add comma to the end of the line
 "," = [
     "save_selection",
     "goto_line_end",
@@ -76,6 +77,7 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
+# Add semicolumn to the end of the line
 ";" = [
     "save_selection",
     "goto_line_end",
@@ -84,7 +86,8 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
-F = "file_picker_in_current_buffer_directory"
-"." = ":toggle-option file-picker.git-ignore"
+F = "file_picker_in_current_buffer_directory" # useful for accessing sibling giles raather than a file tree
+"." = ":toggle-option file-picker.git-ignore" # toggle seeing files hidden with the .gitignore in file pickers
 "=" = ":format"
 "+" = ":indent-style 4"
+"q" = ":q"
