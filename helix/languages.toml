@@ -9,6 +9,7 @@ indent = { tab-width = 4, unit = " " }
 [[language]]
 name = "json"
 indent = { tab-width = 4, unit = " " }
+auto-format = false
 
 [[language]]
 name = "vue"
@@ -37,4 +38,8 @@ indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "php"
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = "html"
 indent = { tab-width = 4, unit = " " }
