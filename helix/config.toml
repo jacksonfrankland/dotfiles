@@ -86,7 +86,8 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
-F = "file_picker_in_current_buffer_directory" # useful for accessing sibling files rather than a file tree
+o = ":sh tmux popup"
+F = "file_picker_in_current_buffer_directory" # useful for accessing sibling giles raather than a file tree
 "." = ":toggle-option file-picker.git-ignore" # toggle seeing files hidden with the .gitignore in file pickers
 "=" = ":format"
 "+" = ":indent-style 4"
