@@ -2,10 +2,22 @@
 
 DOTFILES=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+if test ! $(which brew); then
+    echo 'Installing homebrew...'
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    echo 'Done installing homebrew.'
+fi
+
+rm -rf "$HOME/Brewfile"
+ln -s "$DOTFILES/Brewfile" "$HOME/Brewfile"
+brew bundle install
+
+rm -rf "$HOME/.zshrc"
+ln -s "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+
 rm -rf "$HOME/.config/kitty"
 ln -s "$DOTFILES/kitty" "$HOME/.config/kitty"
 
-# Install tmux plugins
 if test ! -d "$HOME/.tmux/plugins/tpm"; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
@@ -30,3 +42,8 @@ ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
 rm -rf "$HOME/.config/helix"
 ln -s "$DOTFILES/helix" "$HOME/.config/helix"
+
+rm -rf "$(bat --config-dir)/themes"
+mkdir -p "$(bat --config-dir)"
+ln -s "$DOTFILES/bat/themes" "$(bat --config-dir)/themes"
+bat cache --build
