@@ -67,3 +67,6 @@ export VISUAL='hx'
 export BAT_THEME="Catppuccin-macchiato"
 
 export PATH="$HOME/.local/bin:$PATH"
+
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$HOME/Library/pnpm:$PATH"

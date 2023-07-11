@@ -14,6 +14,7 @@ brew bundle install
 
 rm -rf "$HOME/.zshrc"
 ln -s "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+source "$HOME/.zshrc"
 
 rm -rf "$HOME/.config/kitty"
 ln -s "$DOTFILES/kitty" "$HOME/.config/kitty"
@@ -47,3 +48,6 @@ rm -rf "$(bat --config-dir)/themes"
 mkdir -p "$(bat --config-dir)"
 ln -s "$DOTFILES/bat/themes" "$(bat --config-dir)/themes"
 bat cache --build
+
+mkdir -p "$HOME/Library/pnpm"
+pnpm add -g svelte-language-server typescript typescript-language-server
