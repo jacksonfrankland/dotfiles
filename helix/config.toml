@@ -39,6 +39,9 @@ tab = "→"
 hidden = false # show hidden files as in starting with a dot
 git-global = false # show files hidden by git globally
 
+[editor.soft-wrap]
+enable = true
+
 [keys.normal]
 pageup = "half_page_up"
 pagedown = "half_page_down"
