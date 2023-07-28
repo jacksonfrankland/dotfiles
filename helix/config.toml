@@ -57,6 +57,7 @@ x = ["extend_line_below", "select_mode"] # go into select mode when you select l
 [keys.select]
 pageup = "half_page_up"
 pagedown = "half_page_down"
+esc = ["collapse_selection", "normal_mode"] # remove selections
 y = "yank_joined_to_clipboard"
 p = ["replace_selections_with_clipboard", ":w"] # in select mode I always want to paste over my selection
 P = ["replace_selections_with_clipboard", ":w"]
@@ -90,7 +91,7 @@ esc = [":w", "normal_mode"]
     "jump_backward",
 ]
 o = ":sh tmux popup"
-n = ":sh tmux popup -E nnn"
+n = ":sh tmux popup -E 'lf'"
 F = "file_picker_in_current_buffer_directory" # useful for accessing sibling files rather than a file tree
 "." = ":toggle-option file-picker.git-ignore" # toggle seeing files hidden with the .gitignore in file pickers
 "=" = ":format"
