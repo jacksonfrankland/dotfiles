@@ -1,19 +1,17 @@
 [[language]]
 name = "javascript"
-indent = { tab-width = 4, unit = " " }
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
 
 [[language]]
 name = "typescript"
-indent = { tab-width = 4, unit = " " }
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
 
 [[language]]
 name = "json"
-indent = { tab-width = 4, unit = " " }
 auto-format = false
 
 [[language]]
 name = "vue"
-indent = { tab-width = 4, unit = " " }
 auto-format = false
 file-types = ["vue"]
 injection-regex = "vue"
@@ -26,20 +24,15 @@ tsdk = "/Users/jacksonfrankland/.nvm/versions/node/v16.19.0/lib/node_modules/typ
 
 [[language]]
 name = "svelte"
-indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "toml"
-indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "bash"
-indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "php"
-indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "html"
-indent = { tab-width = 4, unit = " " }
