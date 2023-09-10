@@ -36,3 +36,8 @@ name = "php"
 
 [[language]]
 name = "html"
+
+[[languages]]
+name = "go"
+auto-format = true
+formatter = { command = "goimports" }

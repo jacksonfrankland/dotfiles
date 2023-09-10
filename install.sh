@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 DOTFILES=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -11,6 +11,10 @@ fi
 rm -rf "$HOME/Brewfile"
 ln -s "$DOTFILES/Brewfile" "$HOME/Brewfile"
 brew bundle install
+
+go install golang.org/x/tools/gopls@latest          # LSP
+go install github.com/go-delve/delve/cmd/dlv@latest # Debugger
+go install golang.org/x/tools/cmd/goimports@latest  # Formatter
 
 rm -rf "$HOME/.zshrc"
 ln -s "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
@@ -43,6 +47,9 @@ ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
 rm -rf "$HOME/.config/helix"
 ln -s "$DOTFILES/helix" "$HOME/.config/helix"
+
+rm -rf "$HOME/.config/zellij"
+ln -s "$DOTFILES/zellij" "$HOME/.config/zellij"
 
 rm -rf "$(bat --config-dir)/themes"
 mkdir -p "$(bat --config-dir)"
