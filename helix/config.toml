@@ -47,6 +47,7 @@ pageup = "half_page_up"
 pagedown = "half_page_down"
 "C-u" = "half_page_up"
 "C-d" = "half_page_down"
+"C-g" = "rotate_view"
 esc = ["collapse_selection", "keep_primary_selection", ":w"] # remove additional cursors and selections
 y = "yank_joined_to_clipboard" # use my system clipboard
 p = ["paste_clipboard_after", ":w"]
@@ -98,10 +99,13 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
-o = ":sh tmux popup"
-n = ":sh tmux popup -E 'lf'"
+# o = ":sh zellij action new-pane -f"
+n = ":sh zellij run -cf -n lf -- lf"
 F = "file_picker_in_current_buffer_directory" # useful for accessing sibling files rather than a file tree
 "." = ":toggle-option file-picker.git-ignore" # toggle seeing files hidden with the .gitignore in file pickers
 "=" = ":format"
 "+" = ":indent-style 4"
 "q" = ":q"
+
+[keys.normal.space.c]
+g = ":sh zellij run -f -n go -- go run main.go"

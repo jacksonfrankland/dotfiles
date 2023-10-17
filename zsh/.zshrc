@@ -14,6 +14,26 @@ alias fixjs='rm -rf node_modules/;npm cache clear --force && npm install'
 alias pn='pnpm'
 alias updatexcode='xcode-select --install'
 alias zj='zellij'
+alias zja='zellij a -c'
+alias flashkeyboard='make idank/sweeq:via:flash -e USER_NAME=idank -e POINTING_DEVICE=trackball -e TRACKBALL_RGB_RAINBOW=yes -e POINTING_DEVICE_POSITION=left -e CONVERT_TO=rp2040_ce -j8'
+alias dh='dirs -v'
+for index ({1..99}) alias "$index"="cd +${index}"; unset index
+
+setopt AUTO_PUSHD           # Push the current directory visited on the stack.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+
+# Setup a custom completions directory
+fpath=($HOME/.local/share/zsh/completions $fpath)
+autoload -U compinit; compinit
+_comp_options+=(globdots) # With hidden files
+
+# Refresh completions
+function refreshcompletions() {
+	local DIR=$HOME/.local/share/zsh/completions
+
+	zellij setup --generate-completion zsh > $DIR/_zellij
+}
 
 function dockspace {
 	# default - add space tile to dock
@@ -21,7 +41,7 @@ function dockspace {
 	killall Dock
 }
 
-function kill_port () {
+function killport () {
     [ $# -eq 1 ] && kill $(lsof -t -i4TCP:$1) && echo 'done'
 }
 
@@ -61,6 +81,33 @@ function sshrem() {
 # remove all node_module foders within a directory
 function remove_node_modules () {
 	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
+}
+
+function d () {
+	if [[ $# -eq 1 ]]; then
+    selected=$1
+	else
+    items="$(find ~/Code -maxdepth 1 -mindepth 1 \( -type l -o -type d \))"
+    selected="$(echo "$items" | fzf)"
+	fi
+
+	dirname="$(basename "$selected" | sed 's/\./_/g')"
+
+	cd "$selected"
+}
+
+function a () {
+	if [[ $# -eq 1 ]]; then
+    selected=$1
+	else
+    items="$(find ~/Code -maxdepth 1 -mindepth 1 \( -type l -o -type d \))"
+    selected="$(echo "$items" | fzf)"
+	fi
+
+	dirname="$(basename "$selected" | sed 's/\./_/g')"
+
+	cd "$selected"
+	zja "$dirname"
 }
 
 export EDITOR='hx'
