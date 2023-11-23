@@ -1,0 +1,41 @@
+set clipboard+=unnamed
+set clipboard+=ideaput
+let mapleader=" "
+nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>wv :action SplitVertically<CR>
+nnoremap <leader>ws :action SplitHorizontally<CR>
+nnoremap <leader>q :action CloseContent<CR>
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>c :action CommentByLineComment<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>=  :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+nnoremap ]e :action GotoNextError<CR>
+nnoremap [e :action GotoPreviousError<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap <leader>wb :action JumpToLastWindow<CR>
+nnoremap <leader>wh :action HideAllWindows<CR>
+nnoremap <leader>f :action GotoFile<CR>
+nnoremap <leader>s :action GotoSymbol<CR>
+nnoremap <leader>a :action GotoAction<CR>
+
+" Reselect visual selection after indenting.
+vnoremap < <gv
+vnoremap > >gv
+
+" Maintain the cursor position when yanking a visual selection.
+vnoremap y myy`y
+
+" Paste replace visual selection without copying it.
+vnoremap p "_dP
+
+" Easy insertion of a trailing ; or ,
+nnoremap <leader>; maA;<esc>`a
+nnoremap <leader>, maA,<esc>`a
+
+" Insert empty line above or below
+nnoremap [<space> moO<esc>`o
+nnoremap ]<space> moo<esc>`o

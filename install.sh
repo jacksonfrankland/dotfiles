@@ -30,6 +30,9 @@ fi
 rm -rf "$HOME/.tmux.conf"
 ln -s "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
 
+rm -rf "$HOME/.ideavimrc"
+ln -s "$DOTFILES/jetbrains/.ideavimrc" "$HOME/.ideavimrc"
+
 mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/t"
 ln -s "$DOTFILES/scripts/t" "$HOME/.local/bin/t"
