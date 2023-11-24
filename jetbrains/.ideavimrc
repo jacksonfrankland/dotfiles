@@ -2,9 +2,11 @@ set clipboard+=unnamed
 set clipboard+=ideaput
 let mapleader=" "
 nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+nnoremap <leader>s :action ActivateStructureToolWindow<CR>
 nnoremap <leader>wv :action SplitVertically<CR>
 nnoremap <leader>ws :action SplitHorizontally<CR>
-nnoremap <leader>q :action CloseContent<CR>
+nnoremap <leader>q :action CloseAllEditors<CR>
 nnoremap [[ :action MethodUp<CR>
 nnoremap ]] :action MethodDown<CR>
 nnoremap zc :action CollapseRegion<CR>
@@ -12,15 +14,17 @@ nnoremap zo :action ExpandRegion<CR>
 nnoremap <leader>c :action CommentByLineComment<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>=  :action ReformatCode<CR>
-nnoremap <leader>o :action OptimizeImports<CR>
+nnoremap <leader>i :action OptimizeImports<CR>
 nnoremap ]e :action GotoNextError<CR>
 nnoremap [e :action GotoPreviousError<CR>
 nnoremap gr :action FindUsages<CR>
 nnoremap <leader>wb :action JumpToLastWindow<CR>
 nnoremap <leader>wh :action HideAllWindows<CR>
 nnoremap <leader>f :action GotoFile<CR>
-nnoremap <leader>s :action GotoSymbol<CR>
-nnoremap <leader>a :action GotoAction<CR>
+nnoremap <leader>a :action QuickActions<CR>
+nnoremap <leader>k :action ShowHoverInfo<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>b :action Annotate<CR>
 
 " Reselect visual selection after indenting.
 vnoremap < <gv
@@ -39,3 +43,14 @@ nnoremap <leader>, maA,<esc>`a
 " Insert empty line above or below
 nnoremap [<space> moO<esc>`o
 nnoremap ]<space> moo<esc>`o
+
+nnoremap s :action KJumpAction.Char2<CR>
+vnoremap s :action KJumpAction.Char2<CR>
+
+set which-key
+set notimeout
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'michaeljsmith/vim-indent-object'
