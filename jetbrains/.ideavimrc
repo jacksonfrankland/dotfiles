@@ -3,14 +3,17 @@ set clipboard+=ideaput
 let mapleader=" "
 nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
 nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+nnoremap <leader>d :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>s :action ActivateStructureToolWindow<CR>
+nnoremap <leader>S :action GotoSymbol<CR>
 nnoremap <leader>wv :action SplitVertically<CR>
 nnoremap <leader>ws :action SplitHorizontally<CR>
-nnoremap <leader>q :action CloseAllEditors<CR>
+nnoremap <leader>wq :action Unsplit<CR>
+nnoremap <leader>wo :action UnsplitAll<CR>
 nnoremap [[ :action MethodUp<CR>
 nnoremap ]] :action MethodDown<CR>
-nnoremap zc :action CollapseRegion<CR>
-nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseRegion<CR>
+nnoremap <leader>ze :action ExpandRegion<CR>
 nnoremap <leader>c :action CommentByLineComment<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>=  :action ReformatCode<CR>
@@ -21,10 +24,15 @@ nnoremap gr :action FindUsages<CR>
 nnoremap <leader>wb :action JumpToLastWindow<CR>
 nnoremap <leader>wh :action HideAllWindows<CR>
 nnoremap <leader>f :action GotoFile<CR>
-nnoremap <leader>a :action QuickActions<CR>
+" nnoremap <leader>a :action QuickActions<CR>
 nnoremap <leader>k :action ShowHoverInfo<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>b :action Annotate<CR>
+" nnoremap <esc> :w<CR> :action EditorEscape<CR>
+nnoremap U :redo<CR>
+nnoremap <c-c> :action EditorCloneCaretBelow<CR>
+nnoremap <c-n> :action SelectNextOccurrence<CR>
+vnoremap <c-n> :action SelectNextOccurrence<CR>
 
 " Reselect visual selection after indenting.
 vnoremap < <gv
