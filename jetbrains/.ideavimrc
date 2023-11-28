@@ -2,7 +2,8 @@ set clipboard+=unnamed
 set clipboard+=ideaput
 let mapleader=" "
 nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
-nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+" nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+nnoremap <leader>e :action SelectInProjectView<CR>
 nnoremap <leader>d :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>s :action ActivateStructureToolWindow<CR>
 nnoremap <leader>S :action GotoSymbol<CR>
@@ -10,25 +11,34 @@ nnoremap <leader>wv :action SplitVertically<CR>
 nnoremap <leader>ws :action SplitHorizontally<CR>
 nnoremap <leader>wq :action Unsplit<CR>
 nnoremap <leader>wo :action UnsplitAll<CR>
-nnoremap [[ :action MethodUp<CR>
-nnoremap ]] :action MethodDown<CR>
 nnoremap <leader>zc :action CollapseRegion<CR>
 nnoremap <leader>ze :action ExpandRegion<CR>
 nnoremap <leader>c :action CommentByLineComment<CR>
+vnoremap <leader>c :action CommentByLineComment<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>=  :action ReformatCode<CR>
+nnoremap <leader>= :action ReformatCode<CR>
 nnoremap <leader>i :action OptimizeImports<CR>
 nnoremap ]e :action GotoNextError<CR>
 nnoremap [e :action GotoPreviousError<CR>
+nnoremap ]g :action VcsShowNextChangeMarker<CR>
+nnoremap [g :action VcsShowPrevChangeMarker<CR>
+nnoremap [m :action MethodUp<CR>
+nnoremap ]m :action MethodDown<CR>
+nnoremap [f :action MethodUp<CR>
+nnoremap ]f :action MethodDown<CR>
+nnoremap ]s :action NextSplitter<CR>
+nnoremap [s :action PrevSplitter<CR>
 nnoremap gr :action FindUsages<CR>
 nnoremap <leader>wb :action JumpToLastWindow<CR>
 nnoremap <leader>wh :action HideAllWindows<CR>
 nnoremap <leader>f :action GotoFile<CR>
-" nnoremap <leader>a :action QuickActions<CR>
+nnoremap <leader>a :action ShowIntentionActions<CR>
 nnoremap <leader>k :action ShowHoverInfo<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>b :action Annotate<CR>
-" nnoremap <esc> :w<CR> :action EditorEscape<CR>
+nnoremap <leader>g :action Annotate<CR>
+nnoremap <leader>b :action RecentFiles<CR>
+nnoremap <leader>/ :action FindInPath<CR>
+nnoremap / :action Find<CR>
 nnoremap U :redo<CR>
 nnoremap <c-c> :action EditorCloneCaretBelow<CR>
 nnoremap <c-n> :action SelectNextOccurrence<CR>
