@@ -16,6 +16,7 @@ nnoremap <leader>ze :action ExpandRegion<CR>
 nnoremap <leader>c :action CommentByLineComment<CR>
 vnoremap <leader>c :action CommentByLineComment<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+vnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>= :action ReformatCode<CR>
 nnoremap <leader>i :action OptimizeImports<CR>
 nnoremap ]e :action GotoNextError<CR>
