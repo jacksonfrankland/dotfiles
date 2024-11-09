@@ -12,14 +12,6 @@ rm -rf "$HOME/Brewfile"
 ln -s "$DOTFILES/Brewfile" "$HOME/Brewfile"
 brew bundle install
 
-go install golang.org/x/tools/gopls@latest          # LSP
-go install github.com/go-delve/delve/cmd/dlv@latest # Debugger
-go install golang.org/x/tools/cmd/goimports@latest  # Formatter
-
-rm -rf "$HOME/.zshrc"
-ln -s "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
-source "$HOME/.zshrc"
-
 rm -rf "$HOME/.config/kitty"
 ln -s "$DOTFILES/kitty" "$HOME/.config/kitty"
 
@@ -45,22 +37,38 @@ mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/vuelsp"
 ln -s "$DOTFILES/scripts/vuelsp" "$HOME/.local/bin/vuelsp"
 
-mkdir -p "$HOME/.local/share/zsh/completions"
-refreshcompletions
-
 rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
 rm -rf "$HOME/.config/helix"
 ln -s "$DOTFILES/helix" "$HOME/.config/helix"
 
-rm -rf "$HOME/.config/zellij"
-ln -s "$DOTFILES/zellij" "$HOME/.config/zellij"
+rm -rf "$HOME/.aliases"
+ln -s "$DOTFILES/shell/.aliases" "$HOME/.aliases"
+
+rm -rf "$HOME/.exports"
+ln -s "$DOTFILES/shell/.exports" "$HOME/.exports"
+
+rm -rf "$HOME/.functions"
+ln -s "$DOTFILES/shell/.functions" "$HOME/.functions"
+
+#rm -rf "$HOME/.config/zellij"
+#ln -s "$DOTFILES/zellij" "$HOME/.config/zellij"
 
 rm -rf "$(bat --config-dir)/themes"
 mkdir -p "$(bat --config-dir)"
 ln -s "$DOTFILES/bat/themes" "$(bat --config-dir)/themes"
 bat cache --build
 
-mkdir -p "$HOME/Library/pnpm"
-pnpm add -g svelte-language-server typescript typescript-language-server
+if [ "$SHELL" = "/bin/zsh" ]; then
+    echo "zsh section"
+    rm -rf "$HOME/.zshrc"
+    ln -s "$DOTFILES/shell/.zshrc" "$HOME/.zshrc"
+    source "$HOME/.zshrc"
+
+    mkdir -p "$HOME/.local/share/zsh/completions"
+    refreshcompletions
+
+    mkdir -p "$HOME/Library/pnpm"
+    pnpm add -g svelte-language-server typescript typescript-language-server
+fi
