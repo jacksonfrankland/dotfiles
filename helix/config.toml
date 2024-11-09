@@ -57,6 +57,7 @@ x = ["extend_line_below", "select_mode"] # go into select mode when you select l
 z = "move_next_word_start"
 ";" = "flip_selections"
 "," = "repeat_last_motion"
+"s" = "goto_word"
 
 [keys.select]
 pageup = "half_page_up"

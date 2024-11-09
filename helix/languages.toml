@@ -11,18 +11,6 @@ name = "json"
 auto-format = false
 
 [[language]]
-name = "vue"
-auto-format = false
-file-types = ["vue"]
-injection-regex = "vue"
-language-server = { command = "vuelsp" }
-roots = ["package.json"]
-scope = "text.html.vue"
-
-[language.config.typescript]
-tsdk = "/Users/jacksonfrankland/.nvm/versions/node/v16.19.0/lib/node_modules/typescript/lib"
-
-[[language]]
 name = "svelte"
 
 [[language]]
