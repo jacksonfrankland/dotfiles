@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-
+# use zsh bash directly as its called from both
 DOTFILES=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 if test ! $(which brew); then
