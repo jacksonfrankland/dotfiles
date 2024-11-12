@@ -1,6 +1,7 @@
 alias updatebrewfile='brew bundle dump -f'
 alias ll='exa --long --header --git -a'
 alias cat='bat'
+alias vim='nvim'
 alias sshgen='ssh-keygen -t rsa'
 alias sshkey='pbcopy < ~/.ssh/id_rsa.pub'
 alias s='kitty +kitten ssh'
@@ -13,3 +14,23 @@ alias updatexcode='xcode-select --install'
 alias zj='zellij'
 alias zja='zellij a -c'
 alias flashkeyboard='make idank/sweeq:via:flash -e USER_NAME=idank -e POINTING_DEVICE=trackball -e TRACKBALL_RGB_RAINBOW=yes -e POINTING_DEVICE_POSITION=left -e CONVERT_TO=rp2040_ce -j8'
+alias gittree='git log --branches --remotes --tags --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
+
+# Laravel
+alias art='php artisan'
+alias artisan='php artisan'
+alias amfs='php artisan migrate:fresh --seed --seeder=SetupSeeder --step -v'
+alias tinker='php artisan tinker'
+alias sail='bash vendor/bin/sail' # docker
+alias pest='[ -f vendor/bin/pest ] && vendor/bin/pest'
+alias pint='[ -f vendor/bin/pint ] && vendor/bin/pint'
+alias duster='[ -f vendor/bin/duster ] && vendor/bin/duster'
+
+# PhpUnit
+alias phpunit='/usr/local/bin/phpunit'
+alias phpunit='vendor/bin/phpunit --log-junit scratch/phpunit_release_report.$(date "+%Y_%m_%d.%H%M%S").xml'
+# support env var 'phpunitpart' as part of the filename
+alias phpunit='vendor/bin/phpunit --log-junit $(echo ${phpunitdir:-scratch})/phpunit_$(echo ${phpunitpart:-report}).xml'
+
+# pest
+alias pest='./vendor/bin/pest'

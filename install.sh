@@ -37,6 +37,9 @@ mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/vuelsp"
 ln -s "$DOTFILES/scripts/vuelsp" "$HOME/.local/bin/vuelsp"
 
+rm -rf "$HOME/.config/starship.toml"
+ln -s "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
+
 rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 

@@ -79,3 +79,222 @@ function a () {
 	cd "$selected"
 	zja "$dirname"
 }
+
+function dockspace {
+	# default - add space tile to dock
+	defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'
+	killall Dock
+}
+
+function what_port() {
+	# macOs - what app is running on a port
+	if [ $# -lt 1 ]; then
+		echo "usage: PORT";
+		return 1;
+	fi
+    local port=$1
+    type -p nc &>/dev/null || {
+        echo "cannot find util nc... please install nc, brew install nc"
+        return 3
+    }
+    type -p pstree &>/dev/null || {
+        echo "cannot find util nc... please install nc, brew install pstree"
+        return 3
+    }
+    if nc -z localhost $port &>/dev/null; then
+	    echo "PORT '$port' on localhost has a process listening"
+        # find ps for port
+	    pids=$(netstat -anv | awk '{print $4","$11}' | grep "\.$port," | cut -d, -f2 | uniq | xargs)
+        # find parent id (exclude 0 or 1 for launchd)
+	    ppids=$(ps -o ppid -p $pids | tail -n +2 | grep -v 1 | xargs || true)
+	    #
+	    [ -z $ppids ] && pstree $pids || pstree $ppids
+	    return
+    else
+        echo "PORT '$port' on localhost does not have a process listening">&2
+        return 1
+    fi
+}
+
+function scriptdir() {
+	# get the folder the 'current' script (as called from) is working under, https://stackoverflow.com/questions/59895
+	echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+}
+
+function ssh_prepare_keyexchange() {
+	# allow easy remote access - authorize key for current user
+	if [ $# -lt 1 ]; then
+		echo "args: host [user]"
+		return 1;
+	fi
+	target_site=$1
+	user="${2:-root}"
+	for khfile in $(find ~/.ssh -regex '.*known_hosts[0-9]*$')
+	do
+		ssh-keyscan -H ${target_site} >> ${khfile}
+	done
+	ssh-copy-id ${user}@${target_site}
+}
+
+function clearall() {
+    [ ! -e ./artisan ] && echo "no artisan" && return
+    artisan="php artisan "
+    dotenv=.env
+    clearenv="${1:-${APP_ENV:-}}"
+    if [ -n "$clearenv" ]; then
+        artisan="php artisan --env $clearenv "
+        dotenv=.env.$clearenv
+        # reset if local
+        if [ "$clearenv" = "local" ]; then
+            dotenv=.env
+        fi
+    fi
+    echo -e "\nUsing APP_ENV as '${clearenv:-local}' with dotenv file $dotenv \n"
+    [ ! -e "${dotenv}" ] && {
+        echo "Stopping - cannot find dotenv file '$dotenv'"
+        return 1
+    }
+    grep -E 'APP_ENV|_CONNECTION|_DRIVER|PROCORE|DB_DATABASE' $dotenv | grep -v '^#'
+    echo -e "\n"
+
+    php_ver="$(get_php_version)"
+
+    cleanfiles=$(ls -1 bootstrap/cache/*.php 2>&1) && {
+        for f in $cleanfiles; do echo "removing $f"; done
+        /bin/rm -f bootstrap/cache/*.php &>/dev/null || true;
+    } || true
+
+    ac=$($artisan clear 2>&1) && echo $ac || true
+    case "$php_ver" in
+    5.6)
+        logit "not supported" && return 1
+        ;;
+    7.0|7.1|7.2|7.3|7.4)
+        artisan="php artisan "
+        $artisan | grep -q opcache && $artisan opcache:clear 2>&1 || true
+        ac=$($artisan queue:flush 2>&1) && echo $ac || true
+        # there isn't optimize:clear for php7.0 compatible laravel versions
+        # $artisan event:clear
+        $artisan view:clear
+        $artisan cache:clear
+        $artisan config:clear
+        $artisan route:clear
+
+        if [ $# -gt 1 ]; then
+            # optimize things again.
+            $artisan optimize
+        fi
+        ;;
+     *)
+        # this clears all
+        $artisan optimize:clear
+        $artisan | grep -q opcache && $artisan opcache:clear &>/dev/null || true
+        $artisan queue:clear
+        $artisan queue:flush
+        $artisan schedule:clear-cache
+
+        if [ $# -gt 1 ]; then
+            # optimize things again.
+            $artisan optimize
+        fi
+    esac
+    echo "done"
+    return
+
+}
+
+# postgres occationally refuses connections. This resolves it
+function fixpsql() {
+	brew services stop postgresql@9.5;
+	rm -f /usr/local/var/postgresql\@9.5/postmaster.pid;
+	brew services start postgresql@9.5;
+}
+
+# remove all node_module foders within a directory
+function remove_node_modules () {
+	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
+}
+
+function pghashlib_install() {
+
+    PG_PORT="${PG_PORT:-5432}"
+
+    if [ -n "$(dbngin_versions)" ]; then
+        echo "DBngin PostgreSQL appears to be installed, the following versions are available ($(dbngin_versions))."
+        read -p "Install against a DBngin PostgreSQL version or continue with default path (Enter for default)" dbnginchoice
+        if [ -n "$dbnginchoice" ]; then
+            echo "Temporarily setting PATH and PG_PORT for DBngin $dbnginchoice".
+            export PATH="$(dbngin_path $dbnginchoice)/bin:$PATH"
+            export PG_PORT=$(dbngin_port $dbnginchoice)
+        else
+            echo "Continuing on with default postgres version"
+        fi
+    fi
+
+
+    # alternative
+    #   - https://github.com/Cyan4973/xxHash
+    #   - https://github.com/hatarist/pg_xxhash
+    #   - https://github.com/fboulnois/pg_uuidv7
+    #   - https://github.com/petere/pgvihash
+
+    # extensions
+    # https://gist.github.com/joelonsql/e5aa27f8cc9bd22b8999b7de8aee9d47
+    # https://docs.digitalocean.com/products/databases/postgresql/details/supported-extensions/
+    #
+
+    HOMEBREW_NO_INSTALL_CLEANUP=true  HOMEBREW_NO_INSTALL_UPGRADE=true \
+    brew install docutils # provides rst2html command
+    pushd /tmp && \
+    wget --quiet https://github.com/markokr/pghashlib/archive/master.zip -O pghashlib.zip && \
+    echo "unzip" && unzip -o pghashlib.zip &>/dev/null && \
+    pushd pghashlib-master && \
+    echo "hashlib install" && \
+    if [ -e "$(find $(pg_config --includedir) -name 'varatt.h')" ]; then
+        # postgres 16+ fails for phhashlib
+        # build failure on postgres16 - https://stackoverflow.com/questions/77617997/how-to-set-varsize-and-set-varsize-in-postgresql-16
+        # append after match #include <fmgr.h> - src/pghashlib.h
+        line=$(grep -n '#include <fmgr.h>' src/pghashlib.h | cut -d: -f1)
+        sed -i '' "${line}s/^/#include <varatt.h>\n/" src/pghashlib.h
+    fi &&
+    echo "make" && make &>/dev/null && \
+    env | grep -Ei 'PG_' && \
+    echo "make install" && {
+        touch $(pg_config --libdir)/test ||
+        sudo make install &>/dev/null &&
+        make install &>/dev/null
+    } && \
+    echo "hashlib done"
+
+    popd && \
+    echo "Tidyup hashlib" && \
+    [ -e pghashlib-master ] && rm -rf pghashlib-master && \
+    echo done
+    # rm -f pghashlib.zip &>/dev/null || true
+
+    popd
+
+    psql -U $(whoami) -p $PG_PORT -c "create role postgres superuser login password '';" &>/dev/null || true
+    psql -U postgres -p $PG_PORT -c "drop extension hashlib" &>/dev/null || true
+
+    psql -U postgres -p $PG_PORT -c "create extension hashlib" && \
+    [ $(psql -U postgres -p $PG_PORT -t -c "select encode(hash128_string('abcdefg', 'murmur3'), 'hex');" | head -1 | awk '{print $1}') == '069b3c88000000000000000000000000' ] \
+        && echo 'pghashlib installed correctly' \
+        || 'pghashlib not installed correctly'
+    psql -U postgres -p $PG_PORT -c '\dx'
+
+}
+
+function fix_postgres() {
+    local PG_VERSION="${1:-${PGVERSION:-9.5}}"
+
+    brew services stop postgresql@${PG_VERSION};
+    mkdir -p /usr/local/var/postgresql@${PG_VERSION}/{{pg_commit_ts,pg_dynshmem,pg_replslot,pg_serial,pg_snapshots,pg_stat,pg_stat_tmp,pg_tblspc,pg_twophase},pg_logical/{mappings,snapshots}}
+    rm -f /usr/local/var/postgresql@${PG_VERSION}/postmaster.pid &>/dev/null
+    pgpids="$(ps ax  | grep 'postgre[s]ql\@' | awk '{print $1}')"
+    [ -z "${pgpids}" ] && echo "NO postgres IDS found." || /bin/kill -SIGHUP "$pgpids" &>/dev/null
+    brew services start postgresql@${PG_VERSION}
+    sleep 2
+    pghashlib_install
+    psql -l
+}

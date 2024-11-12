@@ -1,5 +1,5 @@
 autoload -U promptinit; promptinit
-prompt pure
+eval "$(starship init zsh)"
 
 source $HOME/.aliases
 
@@ -18,4 +18,4 @@ _comp_options+=(globdots) # With hidden files
 source $HOME/.functions
 source $HOME/.exports
 
-fastfetch
+# fastfetch
