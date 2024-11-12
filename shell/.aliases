@@ -1,5 +1,5 @@
 alias updatebrewfile='brew bundle dump -f'
-alias ll='exa --long --header --git -a'
+alias ll='eza --long --header --git -a'
 alias cat='bat'
 alias vim='nvim'
 alias sshgen='ssh-keygen -t rsa'

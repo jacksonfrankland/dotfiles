@@ -8,7 +8,7 @@ tap "qmk/qmk"
 brew "bat"
 brew "cloudflared", link: false
 brew "cmatrix"
-brew "exa"
+brew "eza"
 brew "fastfetch"
 brew "fzf"
 brew "helix"

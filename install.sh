@@ -75,3 +75,11 @@ if [ "$SHELL" = "/bin/zsh" ]; then
     mkdir -p "$HOME/Library/pnpm"
     pnpm add -g svelte-language-server typescript typescript-language-server
 fi
+
+if [ "$SHELL" = "/bin/bash" ]; then
+    echo "bash section"
+    rm -rf "$HOME/.bash_profile"
+    ln -s "$DOTFILES/shell/.bash_profile" "$HOME/.bash_profile"
+    source "$HOME/.bash_profile"
+fi
+
