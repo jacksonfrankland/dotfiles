@@ -11,14 +11,14 @@ if ! echo "$PROMPT_COMMAND" | grep 'enter_directory'; then # add enter_directory
     export PROMPT_COMMAND="$PROMPT_COMMAND; enter_directory"
 fi
 
-# Use bash-completion, if available
-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    . /usr/share/bash-completion/bash_completion
-
 # Node Version Manager
 if test -s "/usr/local/opt/nvm/nvm.sh"; then
     mkdir -p "${NVM_HOME:-$HOME/.nvm}" || true
     source "/usr/local/opt/nvm/nvm.sh" # This loads nvm
+
+    if test -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm"; then
+        source "/usr/local/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+    fi
 fi
 
 # Jave Env - http://www.jenv.be/ - install multiple java environments
@@ -40,6 +40,18 @@ if eval false; then
     export CPPFLAGS="-I/usr/local/opt/ruby/include"
     ## For pkg-config to find ruby you may need to set:
     export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+fi
+
+# Bash Auto Complete
+# bash v3 on mac doesnt support nosort option - lets ignore it https://rakhesh.com/mac/bash-complete-nosort-invalid-option-name/
+[ ! -f /usr/local/etc/bash_completion ] && echo -e "missing bash-completion, try\n\tbrew install bash-completion"
+# install brew bash (v5) and nosort is supported.
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion 2>&1  | sed '/^$/d'
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh" | sed '/^$/d'
+
+# Node Version Manager - Auto Complete
+if test ! -z "${NVM_DIR}"; then
+    [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 fi
 
 function enter_directory() {
