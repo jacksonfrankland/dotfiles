@@ -5,6 +5,7 @@ tap "homebrew/services"
 tap "osx-cross/arm"
 tap "osx-cross/avr"
 tap "qmk/qmk"
+brew "bash-completion"
 brew "bat"
 brew "cloudflared", link: false
 brew "cmatrix"
