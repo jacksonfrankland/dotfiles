@@ -80,6 +80,17 @@ function a () {
 	zja "$dirname"
 }
 
+function o() {
+    if [[ $# -eq 1 ]]; then
+        selected=$1
+    else
+        list="$(orbctl list)"
+        selected="$(echo "$list" | fzf)"
+    fi
+    machine="$(basename "$selected" | sed 's/ .*//')"
+    orb -m "$machine"
+}
+
 function dockspace {
 	# default - add space tile to dock
 	defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'
