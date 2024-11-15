@@ -21,6 +21,9 @@ fi
 rm -rf "$HOME/.tmux.conf"
 ln -s "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
 
+rm -rf "$HOME/.aerospace.toml"
+ln -s "$DOTFILES/aerospace/.aerospace.toml" "$HOME/.aerospace.toml"
+
 rm -rf "$HOME/.ideavimrc"
 ln -s "$DOTFILES/jetbrains/.ideavimrc" "$HOME/.ideavimrc"
 
@@ -35,6 +38,11 @@ ln -s "$DOTFILES/scripts/lf-pick" "$HOME/.local/bin/lf-pick"
 mkdir -p "$HOME/.local/bin"
 rm -rf "$HOME/.local/bin/vuelsp"
 ln -s "$DOTFILES/scripts/vuelsp" "$HOME/.local/bin/vuelsp"
+
+mkdir -p "$HOME/.config/borders"
+rm -rf "$HOME/.config/borders/bordersrc"
+ln -s "$DOTFILES/borders/bordersrc" "$HOME/.config/borders/bordersrc"
+brew services start borders
 
 rm -rf "$HOME/.config/starship.toml"
 ln -s "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
@@ -73,6 +81,9 @@ if [ "$SHELL" = "/bin/zsh" ]; then
 
     mkdir -p "$HOME/Library/pnpm"
     pnpm add -g svelte-language-server typescript typescript-language-server
+    pnpm self-update
+#    You may need to run this for zsh completions
+#    autoload -Uz zsh-newuser-install && zsh-newuser-install -f
 fi
 
 if [ "$SHELL" = "/bin/bash" ]; then
