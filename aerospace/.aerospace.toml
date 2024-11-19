@@ -241,3 +241,7 @@ run = 'move-node-to-workspace N'
 if.app-id = 'dev.kdrag0n.MacVirt'
 run = 'move-node-to-workspace O'
 
+[[on-window-detected]]
+if.app-id = 'de.beyondco.herd'
+run = 'move-node-to-workspace O'
+
