@@ -1,17 +1,9 @@
-[[language]]
-name = "javascript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-
-[[language]]
-name = "typescript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+[language-server]
+biome = { command = "biome", args = ["lsp-proxy"] }
 
 [[language]]
 name = "json"
 auto-format = false
-
-[[language]]
-name = "svelte"
 
 [[language]]
 name = "toml"
@@ -29,3 +21,21 @@ name = "html"
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }
+
+[[languages]]
+name = "bash"
+file-types = ["sh", "bash", ".functions"]
+
+[[language]]
+name = "svelte"
+text-width = 120
+scope = "source.svelte"
+injection-regex = "svelte"
+file-types = ["svelte"]
+language-servers = [
+  "svelteserver",
+  # "emmet-lsp",
+  # "efm-lsp",
+  # "eslint",
+  "tailwindcss-ls",
+]

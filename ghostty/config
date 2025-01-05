@@ -1,0 +1,8 @@
+adjust-cell-height = 50%
+theme = "catppuccin-frappe"
+copy-on-select = true
+quit-after-last-window-closed = true
+minimum-contrast = 3
+keybind = global:opt+shift+space=toggle_quick_terminal
+window-padding-x = 5
+font-size = 12

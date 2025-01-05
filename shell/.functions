@@ -91,6 +91,15 @@ function o() {
     orb -m "$machine"
 }
 
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+  	builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
 function dockspace {
 	# default - add space tile to dock
 	defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'
@@ -308,4 +317,13 @@ function fix_postgres() {
     sleep 2
     pghashlib_install
     psql -l
+}
+
+clear_dns_cache ()
+{
+    [ "$(uname)" == 'Darwin' ] && {
+        sudo dscacheutil -flushcache;
+        sudo killall -HUP mDNSResponder;
+        echo "cleared"
+    }
 }

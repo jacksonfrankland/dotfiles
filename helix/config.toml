@@ -10,6 +10,7 @@ auto-save = true # save when window looses focus
 idle-timeout = 0
 # original gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 gutters = ["diagnostics", "spacer", "diff", "line-numbers", "spacer", "spacer"]
+indent-heuristic = "tree-sitter"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -24,16 +25,16 @@ mode.insert = "INSERT"
 mode.select = "SELECT"
 right = ["diagnostics", "version-control", "position", "file-encoding"]
 
-[editor.indent-guides]
-render = true
+# [editor.indent-guides]
+# render = true
 
-[editor.whitespace.render]
-space = "none"
-tab = "all"
-newline = "none"
+# [editor.whitespace.render]
+# space = "none"
+# tab = "all"
+# newline = "none"
 
-[editor.whitespace.characters]
-tab = "→"
+# [editor.whitespace.characters]
+# tab = "→"
 
 [editor.file-picker]
 hidden = false # show hidden files as in starting with a dot
@@ -58,6 +59,7 @@ z = "move_next_word_start"
 ";" = "flip_selections"
 "," = "repeat_last_motion"
 "s" = "goto_word"
+"G" = "goto_last_line"
 
 [keys.select]
 pageup = "half_page_up"
@@ -110,3 +112,7 @@ F = "file_picker_in_current_buffer_directory" # useful for accessing sibling fil
 
 [keys.normal.space.c]
 g = ":sh zellij run -f -n go -- go run main.go"
+
+[keys.normal.g]
+"left" = "goto_line_start"
+"right" = "goto_line_end"

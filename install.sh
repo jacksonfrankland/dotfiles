@@ -62,6 +62,9 @@ ln -s "$DOTFILES/shell/.exports" "$HOME/.exports"
 rm -rf "$HOME/.functions"
 ln -s "$DOTFILES/shell/.functions" "$HOME/.functions"
 
+rm -rf "$HOME/.config/ghostty"
+ln -s "$DOTFILES/ghostty" "$HOME/.config/ghostty"
+
 #rm -rf "$HOME/.config/zellij"
 #ln -s "$DOTFILES/zellij" "$HOME/.config/zellij"
 
