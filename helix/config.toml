@@ -58,7 +58,6 @@ x = ["extend_line_below", "select_mode"] # go into select mode when you select l
 z = "move_next_word_start"
 ";" = "flip_selections"
 "," = "repeat_last_motion"
-"s" = "goto_word"
 "G" = "goto_last_line"
 
 [keys.select]
