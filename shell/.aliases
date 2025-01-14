@@ -16,6 +16,7 @@ alias zja='zellij a -c'
 alias flashkeyboard='make idank/sweeq:via:flash -e USER_NAME=idank -e POINTING_DEVICE=trackball -e TRACKBALL_RGB_RAINBOW=yes -e POINTING_DEVICE_POSITION=left -e CONVERT_TO=rp2040_ce -j8'
 alias gittree='git log --branches --remotes --tags --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias h='hx .'
+alias y='yazi'
 
 # Laravel
 alias art='php artisan'
