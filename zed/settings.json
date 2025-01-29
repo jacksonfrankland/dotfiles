@@ -21,7 +21,15 @@
         "git_gutter": "tracked_files",
         "inline_blame": { "enabled": false }
     },
-    "languages": { "JSONC": { "tab_size": 4 } },
+    "languages": {
+        "JSONC": { "tab_size": 4 },
+        "PHP": {
+            "language_servers": ["intelephense", "!phpactor"]
+        }
+    },
+    "file_types": {
+        "Blade": ["*.blade.php"]
+    },
     "preferred_line_length": 120,
     "tab_bar": { "show": false, "show_nav_history_buttons": false },
     "vim": {
