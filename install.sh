@@ -53,6 +53,13 @@ ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 rm -rf "$HOME/.config/helix"
 ln -s "$DOTFILES/helix" "$HOME/.config/helix"
 
+mkdir -p "$HOME/.config/zed"
+rm -rf "$HOME/.config/zed/settings.json"
+ln -s "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
+rm -rf "$HOME/.config/zed/keymap.json"
+ln -s "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
+
+
 rm -rf "$HOME/.aliases"
 ln -s "$DOTFILES/shell/.aliases" "$HOME/.aliases"
 
@@ -95,4 +102,3 @@ if [ "$SHELL" = "/bin/bash" ]; then
     ln -s "$DOTFILES/shell/.bash_profile" "$HOME/.bash_profile"
     source "$HOME/.bash_profile"
 fi
-

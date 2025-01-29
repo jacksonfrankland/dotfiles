@@ -1,0 +1,63 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+    {
+        "context": "Workspace",
+        "bindings": {
+            // "shift shift": "file_finder::Toggle"
+        }
+    },
+    {
+        "context": "Editor",
+        "bindings": {
+            // "j k": ["workspace::SendKeystrokes", "escape"]
+        }
+    },
+    {
+        "context": "vim_mode == normal || vim_mode == visual",
+        "bindings": {
+            "s": ["vim::PushOperator", { "Sneak": {} }],
+            "S": ["vim::PushOperator", { "SneakBackward": {} }],
+            "U": "vim::Redo",
+            "y": ["workspace::SendKeystrokes", "m y y ` y"],
+            "space e": "pane::RevealInProjectPanel",
+            "space ,": ["workspace::SendKeystrokes", "m a $ a , escape ` a"],
+            "space ;": ["workspace::SendKeystrokes", "m a $ a ; escape ` a"],
+            "space p": "projects::OpenRecent",
+            "space f": "file_finder::Toggle",
+            "space S": "project_symbols::Toggle",
+            "space s": "outline::Toggle",
+            "space c": "vim::ToggleComments",
+            "space w v": "pane::SplitVertical",
+            "space w s": "pane::SplitHorizontal",
+            "space w q": "pane::CloseAllItems",
+            "space w right": ["workspace::ActivatePaneInDirection", "Right"],
+            "space w left": ["workspace::ActivatePaneInDirection", "Left"],
+            "space w up": ["workspace::ActivatePaneInDirection", "Up"],
+            "space w down": ["workspace::ActivatePaneInDirection", "Down"]
+        }
+    },
+    {
+        "context": "vim_mode == insert || vim_mode == visual",
+        "bindings": {
+            "escape": ["workspace::SendKeystrokes", "escape : w enter"]
+        }
+    },
+    {
+        "context": "vim_mode == normal",
+        "bindings": {
+            // "escape": "workspace::Save"
+        }
+    },
+    {
+        "context": "ProjectPanel",
+        "bindings": {
+            "escape": "workspace::CloseAllDocks"
+        }
+    }
+]
