@@ -97,6 +97,10 @@ if [ "$SHELL" = "/bin/zsh" ]; then
 fi
 
 if [ "$SHELL" = "/bin/bash" ]; then
+    mkdir -p "$HOME/shell"
+    rm -rf "$HOME/shell/postgres.sh"
+    ln -s "$DOTFILES/shell/postgres.sh" "$HOME/shell/postgres.sh"
+
     echo "bash section"
     rm -rf "$HOME/.bash_profile"
     ln -s "$DOTFILES/shell/.bash_profile" "$HOME/.bash_profile"

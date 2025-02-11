@@ -1,6 +1,7 @@
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.exports
+source $HOME/shell/postgres.sh
 
 # Mcfly - https://github.com/cantino/mcfly
 type mcfly &>/dev/null && eval "$(mcfly init bash)"
