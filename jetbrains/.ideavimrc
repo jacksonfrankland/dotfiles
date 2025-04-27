@@ -38,6 +38,7 @@ nnoremap <leader>k :action ShowHoverInfo<CR>
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>g :action Annotate<CR>
 nnoremap <leader>b :action RecentFiles<CR>
+nnoremap <leader>p :action ManageRecentProjects<CR>
 nnoremap <leader>/ :action FindInPath<CR>
 nnoremap / :action Find<CR>
 nnoremap U :redo<CR>
