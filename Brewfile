@@ -1,8 +1,5 @@
 tap "cloudflare/cloudflare"
 tap "FelixKratz/formulae"
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-tap "homebrew/services"
 tap "nikitabobko/tap"
 tap "osx-cross/arm"
 tap "osx-cross/avr"
