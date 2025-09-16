@@ -1,5 +1,5 @@
 adjust-cell-height = 50%
-theme = "catppuccin-frappe"
+theme = "Catppuccin Frappe"
 copy-on-select = true
 quit-after-last-window-closed = true
 minimum-contrast = 3
