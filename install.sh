@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # use zsh bash directly as its called from both
 DOTFILES=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -85,29 +87,16 @@ mkdir -p "$(bat --config-dir)"
 ln -s "$DOTFILES/bat/themes" "$(bat --config-dir)/themes"
 bat cache --build
 
-if [ "$SHELL" = "/bin/zsh" ]; then
-    echo "zsh section"
-    rm -rf "$HOME/.zshrc"
-    ln -s "$DOTFILES/shell/.zshrc" "$HOME/.zshrc"
-    source "$HOME/.zshrc"
+echo "zsh section"
+rm -rf "$HOME/.zshrc"
+ln -s "$DOTFILES/shell/.zshrc" "$HOME/.zshrc"
+source "$HOME/.zshrc"
 
-    mkdir -p "$HOME/.local/share/zsh/completions"
-    refreshcompletions
+mkdir -p "$HOME/.local/share/zsh/completions"
+refreshcompletions
 
-    mkdir -p "$HOME/Library/pnpm"
-    pnpm add -g svelte-language-server typescript typescript-language-server
-    pnpm self-update
+mkdir -p "$HOME/Library/pnpm"
+pnpm add -g svelte-language-server typescript typescript-language-server
+pnpm self-update
 #    You may need to run this for zsh completions
 #    autoload -Uz zsh-newuser-install && zsh-newuser-install -f
-fi
-
-if [ "$SHELL" = "/bin/bash" ]; then
-    mkdir -p "$HOME/shell"
-    rm -rf "$HOME/shell/postgres.sh"
-    ln -s "$DOTFILES/shell/postgres.sh" "$HOME/shell/postgres.sh"
-
-    echo "bash section"
-    rm -rf "$HOME/.bash_profile"
-    ln -s "$DOTFILES/shell/.bash_profile" "$HOME/.bash_profile"
-    source "$HOME/.bash_profile"
-fi

@@ -263,3 +263,8 @@ if.app-id = 'com.mitchellh.ghostty'
 # run = ['move-node-to-workspace T', 'layout accordion']
 run = ['move-node-to-workspace T']
 
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+# run = ['move-node-to-workspace T', 'layout accordion']
+run = ['move-node-to-workspace D']
+
