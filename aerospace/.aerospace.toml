@@ -251,6 +251,10 @@ if.app-id = 'com.navicat.NavicatForPostgreSQL'
 run = 'move-node-to-workspace N'
 
 [[on-window-detected]]
+if.app-id = 'com.tinyapp.TablePlus-setapp'
+run = 'move-node-to-workspace P'
+
+[[on-window-detected]]
 if.app-id = 'dev.kdrag0n.MacVirt'
 run = 'move-node-to-workspace O'
 
