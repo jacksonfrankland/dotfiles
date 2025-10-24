@@ -50,7 +50,7 @@ pagedown = "half_page_down"
 "C-d" = "half_page_down"
 "C-g" = "rotate_view"
 esc = ["collapse_selection", "keep_primary_selection", ":w"] # remove additional cursors and selections
-y = "yank_joined_to_clipboard" # use my system clipboard
+y = ["yank_joined_to_clipboard", "normal_mode", "collapse_selection", "keep_primary_selection" ]
 p = ["paste_clipboard_after", ":w"]
 P = ["replace_selections_with_clipboard", ":w"] # paste over selection
 d = ["yank_joined_to_clipboard", "delete_selection", ":w"] # add deleted text to system clipboaard
@@ -59,6 +59,7 @@ z = "move_next_word_start"
 ";" = "flip_selections"
 "," = "repeat_last_motion"
 "G" = "goto_last_line"
+"ret" = "goto_word"
 
 [keys.select]
 pageup = "half_page_up"
@@ -66,7 +67,7 @@ pagedown = "half_page_down"
 "C-u" = "half_page_up"
 "C-d" = "half_page_down"
 esc = ["collapse_selection", "normal_mode"] # remove selections
-y = "yank_joined_to_clipboard"
+y = ["yank_joined_to_clipboard", "normal_mode", "collapse_selection", "keep_primary_selection" ]
 p = ["replace_selections_with_clipboard", ":w"] # in select mode I always want to paste over my selection
 P = ["replace_selections_with_clipboard", ":w"]
 d = ["yank_joined_to_clipboard", "delete_selection", ":w"] # add deleted text to system clipboaard
@@ -83,6 +84,7 @@ pagedown = "half_page_down"
 esc = [":w", "normal_mode"]
 
 [keys.normal.space]
+# TODO Fix
 # Add comma to the end of the line
 "," = [
     "save_selection",
@@ -92,6 +94,7 @@ esc = [":w", "normal_mode"]
     "delete_selection",
     "jump_backward",
 ]
+# TODO Fix
 # Add semicolumn to the end of the line
 ";" = [
     "save_selection",

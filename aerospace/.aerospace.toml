@@ -215,6 +215,10 @@ if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace A'
 
@@ -271,4 +275,3 @@ run = ['move-node-to-workspace T']
 if.app-id = 'com.hnc.Discord'
 # run = ['move-node-to-workspace T', 'layout accordion']
 run = ['move-node-to-workspace D']
-

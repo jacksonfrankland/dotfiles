@@ -7,24 +7,67 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+    "ui_font_weight": 400.0,
+    "project_panel": {
+        "dock": "left"
+    },
+    "tab_size": 4,
+    "agent": {
+        "inline_assistant_model": {
+            "provider": "openrouter",
+            "model": "anthropic/claude-sonnet-4"
+        },
+        "default_model": {
+            "provider": "openrouter",
+            "model": "openrouter/auto"
+        },
+        "model_parameters": []
+    },
+    "agent_servers": {},
     "theme": {
         "mode": "dark",
         "dark": "Catppuccin Frappé",
         "light": "Catppuccin Latte"
     },
     "vim_mode": true,
-    "ui_font_size": 13,
-    "buffer_font_size": 13,
+    "ui_font_size": 15.0,
+    "buffer_font_size": 12.0,
+    "buffer_line_height": { "custom": 2 },
     "autosave": "on_focus_change",
     "buffer_font_family": "JetBrainsMono Nerd Font",
     "git": {
         "git_gutter": "tracked_files",
-        "inline_blame": { "enabled": false }
+        "inline_blame": { "enabled": true }
+    },
+    "diagnostics": {
+        "button": true,
+        "include_warnings": true,
+        "inline": {
+            "enabled": true,
+            "update_debounce_ms": 150,
+            "padding": 4,
+            "min_column": 0,
+            "max_severity": null
+        }
     },
     "languages": {
         "JSONC": { "tab_size": 4 },
-        "PHP": {
-            "language_servers": ["intelephense", "!phpactor"]
+        "Vue.js": {
+            "formatter": {
+                "external": {
+                    "command": "prettier",
+                    "arguments": [
+                        "--tab-width",
+                        "4",
+                        "--single-quote",
+                        "--no-semi",
+                        "--parser",
+                        "vue",
+                        "--stdin-filepath",
+                        "{buffer_path}"
+                    ]
+                }
+            }
         }
     },
     "file_types": {
@@ -34,5 +77,6 @@
     "tab_bar": { "show": false, "show_nav_history_buttons": false },
     "vim": {
         "toggle_relative_line_numbers": true
-    }
+    },
+    "helix_mode": false
 }
