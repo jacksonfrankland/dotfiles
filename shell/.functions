@@ -319,3 +319,32 @@ clear_dns_cache ()
         echo "cleared"
     }
 }
+
+export LARAVEL_QUEUES='urgent,schedule,workflows,default,invites,database,coles,reports,cache,extended,idle'
+
+function queue:work() {
+    cores php artisan queue:work --memory=512 --timeout=3660 --tries 3 --backoff 5 --queue ${LARAVEL_QUEUES}
+}
+
+function queue:listen() {
+    cores php artisan queue:listen --memory=512 --timeout=3660 --tries 3 --backoff 5 --queue ${LARAVEL_QUEUES}
+}
+
+function queue:clear() {
+    echo ${LARAVEL_QUEUES} | sed -n 1'p' | tr ',' '\n' | while read queue; do
+        php artisan queue:clear --queue ${queue}
+    done
+}
+
+function queue:monitor() {
+    watch php artisan queue:monitor ${LARAVEL_QUEUES}
+}
+
+function queue:restart() {
+    php artisan queue:restart
+}
+
+function clog() {
+    echo '' > storage/logs/laravel.log
+    echo '' > /opt/homebrew/var/log/php-fpm.log
+}
