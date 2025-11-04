@@ -20,6 +20,7 @@
             "space S": "project_symbols::Toggle",
             "space s": "outline::Toggle",
             "space c": "vim::ToggleComments",
+            "space g": "git::Blame",
             "space =": "editor::Format",
             "space w v": "pane::SplitVertical",
             "space w s": "pane::SplitHorizontal",
@@ -32,13 +33,19 @@
             "space w o": "workspace::CloseInactiveTabsAndPanes",
             "s": "vim::PushSneak",
             "shift-s": "vim::PushSneakBackward",
-            "g r": "editor::FindAllReferences",
-            "ctrl-d": "editor::HalfPageDown",
-            "ctrl-u": "editor::HalfPageUp"
+            "g r": "editor::FindAllReferences"
         }
     },
     {
-        "context": "vim_mode == insert || vim_mode == visual",
+        "context": "vim_mode == normal",
+        "bindings": {
+            "ctrl-d": ["workspace::SendKeystrokes", "3 0 j z z"],
+            "ctrl-u": ["workspace::SendKeystrokes", "3 0 k z z"],
+            "ctrl-c": "editor::AddSelectionBelow"
+        }
+    },
+    {
+        "context": "vim_mode == normal || vim_mode == insert || vim_mode == visual",
         "bindings": {
             "escape": ["workspace::SendKeystrokes", "escape : w enter"]
         }

@@ -7,6 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+    "completions": {
+        "words_min_length": 0
+    },
+    "show_edit_predictions": false,
     "ui_font_weight": 400.0,
     "project_panel": {
         "dock": "left"
@@ -52,7 +56,36 @@
     },
     "languages": {
         "JSONC": { "tab_size": 4 },
+        "PHP": {
+            "language_servers": ["phptools", "!intelephense", "!phpactor"],
+            "formatter": {
+                "external": {
+                    "command": "bash",
+                    "arguments": [
+                        "-c",
+                        "cat > {buffer_path} && ./vendor/bin/pint --quiet {buffer_path} && cat {buffer_path}"
+                    ]
+                }
+            }
+        },
         "Vue.js": {
+            "formatter": {
+                "external": {
+                    "command": "prettier",
+                    "arguments": [
+                        "--tab-width",
+                        "4",
+                        "--single-quote",
+                        "--no-semi",
+                        "--parser",
+                        "vue",
+                        "--stdin-filepath",
+                        "{buffer_path}"
+                    ]
+                }
+            }
+        },
+        "Svelte": {
             "formatter": {
                 "external": {
                     "command": "prettier",
@@ -71,12 +104,20 @@
         }
     },
     "file_types": {
-        "Blade": ["*.blade.php"]
+        "PHP": ["*.php", "_ide_helper.php"],
+        "Blade": ["*.blade.php"],
+        "Shell Script": [".aliases", ".functions", ".exports"]
     },
     "preferred_line_length": 120,
     "tab_bar": { "show": false, "show_nav_history_buttons": false },
     "vim": {
         "toggle_relative_line_numbers": true
     },
-    "helix_mode": false
+    "helix_mode": false,
+    "lsp": {
+        "phptools": {
+            "initialization_options": {
+            }
+        }
+    }
 }
