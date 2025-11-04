@@ -24,6 +24,9 @@ if test ! -d "$HOME/.config/tmux/plugins/catppuccin/tmux"; then
     git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 fi
 
+mkdir -p "$HOME/intelephense"
+touch "$HOME/intelephense/licence.txt"
+
 rm -rf "$HOME/.tmux.conf"
 ln -s "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
 
