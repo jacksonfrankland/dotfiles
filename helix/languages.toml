@@ -14,6 +14,22 @@ name = "bash"
 [[language]]
 name = "php"
 
+[language-server.intelephense.config]
+
+[language-server.typescript-language-server.config]
+plugins = [{  name = "@vue/typescript-plugin", location = "/Users/jacksonfrankland/Library/pnpm/vue-language-server", languages = ["vue"] }]
+tsserver = { path = "/Users/jacksonfrankland/Library/pnpm/tsserver" }
+
+[language-server.vuels]
+command = "vue-language-server"
+args = ["--stdio"]
+
+[[language]]
+name = "vue"
+auto-format = true
+language-servers = ["typescript-language-server", "vuels"]
+formatter = { command = 'prettier', args = ["--tab-width", "4", "--single-quote", "--no-semi", "--parser", "vue"] } 
+# formatter = { command = "pnpm", args = ["exec","biome","check", "--stdin-file-path=%{buffer_name}", "--write"] }
 [[language]]
 name = "html"
 
