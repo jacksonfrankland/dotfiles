@@ -37,4 +37,4 @@ alias phpunit='vendor/bin/phpunit --log-junit $(echo ${phpunitdir:-scratch})/php
 # pest
 alias pest='./vendor/bin/pest'
 
-alias i365="mprocs 'cd frontend; npm i; npm run serve;' 'npm i; npm run dev;' 'npm run storybook' 'tail -f storage/logs/laravel.log' 'php artisan horizon' 'watch php artisan queue:monitor urgent,schedule,workflows,default,invites,database,coles,reports,cache,extended,idle' "
+alias i365="nvm use --lts; mprocs 'cd frontend; npm i; npm run serve;' 'npm i; npm run dev;' 'npm run storybook' 'tail -f storage/logs/laravel.log' 'php artisan horizon' 'watch php artisan queue:monitor urgent,schedule,workflows,default,invites,database,coles,reports,cache,extended,idle' "
