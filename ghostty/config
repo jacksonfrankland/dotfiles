@@ -6,3 +6,4 @@ minimum-contrast = 3
 keybind = global:opt+shift+space=toggle_quick_terminal
 window-padding-x = 5
 font-size = 12
+keybind = shift+enter=text:\x1b\r

@@ -13,25 +13,43 @@ name = "bash"
 
 [[language]]
 name = "php"
+language-servers = ["phptools"]
+auto-format = true
+formatter = { command = "pint-fmt" }
 
-[language-server.intelephense.config]
-
-[language-server.typescript-language-server.config]
-plugins = [{  name = "@vue/typescript-plugin", location = "/Users/jacksonfrankland/Library/pnpm/vue-language-server", languages = ["vue"] }]
-tsserver = { path = "/Users/jacksonfrankland/Library/pnpm/tsserver" }
+[language-server.phptools]
+command = "/Users/jacksonfrankland/Library/pnpm/devsense-php-ls"
+args = ["--stdio"]
 
 [language-server.vuels]
 command = "vue-language-server"
 args = ["--stdio"]
+timeout = 60
+
+[language-server.vuels.config]
+typescript = { tsdk = "/Users/jacksonfrankland/Library/pnpm/global/5/node_modules/typescript/lib" }
+
+[language-server.typescript-language-server.config]
+plugins = [{ name = "@vue/typescript-plugin", location = "/Users/jacksonfrankland/Library/pnpm/global/5/node_modules/@vue/typescript-plugin", languages = ["vue"] }]
 
 [[language]]
 name = "vue"
 auto-format = true
-language-servers = ["typescript-language-server", "vuels"]
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "vuels", except-features = ["diagnostics", "completion"] },
+]
 formatter = { command = 'prettier', args = ["--tab-width", "4", "--single-quote", "--no-semi", "--parser", "vue"] } 
 # formatter = { command = "pnpm", args = ["exec","biome","check", "--stdin-file-path=%{buffer_name}", "--write"] }
+[language-server.emmet-language-server]
+command = "emmet-language-server"
+args = ["--stdio"]
+
 [[language]]
 name = "html"
+auto-format = true
+language-servers = ["vscode-html-language-server", "emmet-language-server", "tailwindcss-ls"]
+formatter = { command = "prettier", args = ["--parser", "html"] }
 
 [[languages]]
 name = "go"
@@ -44,6 +62,7 @@ file-types = ["sh", "bash", ".functions"]
 
 [[language]]
 name = "svelte"
+auto-format = true
 text-width = 120
 scope = "source.svelte"
 injection-regex = "svelte"
@@ -55,3 +74,4 @@ language-servers = [
   # "eslint",
   "tailwindcss-ls",
 ]
+formatter = { command = "prettier", args = ["--plugin", "prettier-plugin-svelte", "--parser", "svelte"] }

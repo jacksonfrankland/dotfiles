@@ -348,3 +348,69 @@ function clog() {
     echo '' > storage/logs/laravel.log
     echo '' > /opt/homebrew/var/log/php-fpm.log
 }
+
+function p() {
+    local config=".p.conf"
+
+    if [ ! -f "$config" ]; then
+        echo "No .p.conf found in current directory"
+        return 1
+    fi
+
+    if [ -z "$TMUX" ]; then
+        echo "Not in a tmux session"
+        return 1
+    fi
+
+    # Run setup commands first
+    local in_setup=false
+    while IFS= read -r line; do
+        [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+        if [[ "$line" == "[setup]" ]]; then
+            in_setup=true
+            continue
+        fi
+        [[ "$line" == "["*"]" ]] && break
+        if $in_setup; then
+            echo "setup: $line"
+            eval "$line" || { echo "setup failed: $line"; return 1; }
+        fi
+    done < "$config"
+
+    # Record existing windows to kill later
+    local old_windows="$(tmux list-windows -F '#{window_id}')"
+
+    # Create new windows from config
+    local in_windows=false
+    local first_window=""
+    while IFS= read -r line; do
+        [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+        if [[ "$line" == "[windows]" ]]; then
+            in_windows=true
+            continue
+        fi
+        [[ "$line" == "["*"]" ]] && in_windows=false && continue
+        $in_windows || continue
+
+        local name="${line%%:*}"
+        local cmd="${line#*:}"
+        name="${name## }"; name="${name%% }"
+        cmd="${cmd## }"; cmd="${cmd%% }"
+
+        tmux new-window -n "$name"
+        tmux send-keys "$cmd" Enter
+
+        [ -z "$first_window" ] && first_window="$(tmux display-message -p '#{window_id}')"
+    done < "$config"
+
+    if [ -z "$first_window" ]; then
+        echo "No windows found in .p.conf"
+        return 1
+    fi
+
+    # Switch to first new window, then kill all old windows
+    tmux select-window -t "$first_window"
+    echo "$old_windows" | while read -r wid; do
+        tmux kill-window -t "$wid"
+    done
+}

@@ -1,0 +1,17 @@
+#!/bin/sh
+tmp=$(mktemp /tmp/pint-fmt.XXXXXX.php)
+cat > "$tmp"
+
+dir="$(pwd)"
+while [ "$dir" != "/" ]; do
+    if [ -x "$dir/vendor/bin/pint" ]; then
+        "$dir/vendor/bin/pint" --quiet "$tmp"
+        cat "$tmp"
+        rm "$tmp"
+        exit 0
+    fi
+    dir="$(dirname "$dir")"
+done
+
+cat "$tmp"
+rm "$tmp"

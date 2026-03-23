@@ -84,26 +84,21 @@ pagedown = "half_page_down"
 esc = [":w", "normal_mode"]
 
 [keys.normal.space]
-# TODO Fix
 # Add comma to the end of the line
 "," = [
     "save_selection",
     "goto_line_end",
-    ":append-output echo ','",
-    "collapse_selection",
-    "delete_selection",
+    ":append-output printf ','",
     "jump_backward",
 ]
-# TODO Fix
-# Add semicolumn to the end of the line
+# Add semicolon to the end of the line
 ";" = [
     "save_selection",
     "goto_line_end",
-    ":append-output echo ';'",
-    "collapse_selection",
-    "delete_selection",
+    ":append-output printf ';'",
     "jump_backward",
 ]
+c = "toggle_comments"
 # o = ":sh zellij action new-pane -f"
 n = ":sh zellij run -cf -n lf -- lf"
 F = "file_picker_in_current_buffer_directory" # useful for accessing sibling files rather than a file tree
@@ -112,8 +107,8 @@ F = "file_picker_in_current_buffer_directory" # useful for accessing sibling fil
 "+" = ":indent-style 4"
 "q" = ":q"
 
-[keys.normal.space.c]
-g = ":sh zellij run -f -n go -- go run main.go"
+# [keys.normal.space.c]
+# g = ":sh zellij run -f -n go -- go run main.go"
 
 [keys.normal.g]
 "left" = "goto_line_start"

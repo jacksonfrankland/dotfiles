@@ -7,31 +7,42 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+    "terminal": {
+        "dock": "right",
+    },
+    "format_on_save": "on",
     "completions": {
-        "words_min_length": 0
+        "words_min_length": 0,
     },
     "show_edit_predictions": false,
     "ui_font_weight": 400.0,
     "project_panel": {
-        "dock": "left"
+        "dock": "left",
     },
     "tab_size": 4,
     "agent": {
         "inline_assistant_model": {
             "provider": "openrouter",
-            "model": "anthropic/claude-sonnet-4"
+            "model": "anthropic/claude-opus-4.5",
         },
         "default_model": {
-            "provider": "openrouter",
-            "model": "openrouter/auto"
+            "provider": "copilot_chat",
+            "model": "claude-sonnet-4",
         },
-        "model_parameters": []
+        "model_parameters": [],
     },
-    "agent_servers": {},
+    "agent_servers": {
+        "claude-acp": {
+            "type": "registry",
+            "favorite_config_option_values": {
+                "model": ["opus"],
+            },
+        },
+    },
     "theme": {
         "mode": "dark",
         "dark": "Catppuccin Frappé",
-        "light": "Catppuccin Latte"
+        "light": "Catppuccin Latte",
     },
     "vim_mode": true,
     "ui_font_size": 15.0,
@@ -41,7 +52,7 @@
     "buffer_font_family": "JetBrainsMono Nerd Font",
     "git": {
         "git_gutter": "tracked_files",
-        "inline_blame": { "enabled": true }
+        "inline_blame": { "enabled": true },
     },
     "diagnostics": {
         "button": true,
@@ -51,8 +62,8 @@
             "update_debounce_ms": 150,
             "padding": 4,
             "min_column": 0,
-            "max_severity": null
-        }
+            "max_severity": null,
+        },
     },
     "languages": {
         "JSONC": { "tab_size": 4 },
@@ -63,10 +74,10 @@
                     "command": "bash",
                     "arguments": [
                         "-c",
-                        "cat > {buffer_path} && ./vendor/bin/pint --quiet {buffer_path} && cat {buffer_path}"
-                    ]
-                }
-            }
+                        "cat > {buffer_path} && ./vendor/bin/pint --quiet {buffer_path} && cat {buffer_path}",
+                    ],
+                },
+            },
         },
         "Vue.js": {
             "formatter": {
@@ -80,44 +91,32 @@
                         "--parser",
                         "vue",
                         "--stdin-filepath",
-                        "{buffer_path}"
-                    ]
-                }
-            }
+                        "{buffer_path}",
+                    ],
+                },
+            },
         },
         "Svelte": {
-            "formatter": {
-                "external": {
-                    "command": "prettier",
-                    "arguments": [
-                        "--tab-width",
-                        "4",
-                        "--single-quote",
-                        "--no-semi",
-                        "--parser",
-                        "vue",
-                        "--stdin-filepath",
-                        "{buffer_path}"
-                    ]
-                }
-            }
-        }
+            "formatter": "prettier",
+        },
     },
     "file_types": {
         "PHP": ["*.php", "_ide_helper.php"],
         "Blade": ["*.blade.php"],
-        "Shell Script": [".aliases", ".functions", ".exports"]
+        "Shell Script": [".aliases", ".functions", ".exports"],
     },
     "preferred_line_length": 120,
     "tab_bar": { "show": false, "show_nav_history_buttons": false },
     "vim": {
-        "toggle_relative_line_numbers": true
+        "toggle_relative_line_numbers": true,
     },
     "helix_mode": false,
     "lsp": {
         "phptools": {
             "initialization_options": {
             }
-        }
-    }
+            },
+        },
+    },
+    "which_key": { "enabled": true },
 }

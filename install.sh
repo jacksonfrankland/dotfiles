@@ -27,6 +27,9 @@ fi
 mkdir -p "$HOME/intelephense"
 touch "$HOME/intelephense/licence.txt"
 
+mkdir -p "$HOME/code/.secrets"
+echo "Add your Devsense PHP Tools license key to $HOME/code/.secrets/devsense-license"
+
 rm -rf "$HOME/.tmux.conf"
 ln -s "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
 
@@ -45,8 +48,8 @@ rm -rf "$HOME/.local/bin/lf-pick"
 ln -s "$DOTFILES/scripts/lf-pick" "$HOME/.local/bin/lf-pick"
 
 mkdir -p "$HOME/.local/bin"
-rm -rf "$HOME/.local/bin/vuelsp"
-ln -s "$DOTFILES/scripts/vuelsp" "$HOME/.local/bin/vuelsp"
+rm -rf "$HOME/.local/bin/pint-fmt"
+ln -s "$DOTFILES/scripts/pint-fmt" "$HOME/.local/bin/pint-fmt"
 
 mkdir -p "$HOME/.config/borders"
 rm -rf "$HOME/.config/borders/bordersrc"
@@ -98,7 +101,7 @@ mkdir -p "$HOME/.local/share/zsh/completions"
 refreshcompletions
 
 mkdir -p "$HOME/Library/pnpm"
-pnpm add -g svelte-language-server typescript typescript-language-server
+pnpm add -g svelte-language-server typescript typescript-language-server @vue/language-server@2.2.0 @vue/typescript-plugin@2.2.0 devsense-php-ls
 pnpm self-update
 #    You may need to run this for zsh completions
 #    autoload -Uz zsh-newuser-install && zsh-newuser-install -f
