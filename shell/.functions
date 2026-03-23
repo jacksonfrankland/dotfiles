@@ -377,8 +377,13 @@ function p() {
         fi
     done < "$config"
 
-    # Record existing windows to kill later
-    local old_windows="$(tmux list-windows -F '#{window_id}')"
+    # Record the current window so we can remove it after creating new ones
+    local original_window="$(tmux display-message -p '#{window_id}')"
+
+    # Kill all other existing windows first
+    tmux list-windows -F '#{window_id}' | while read -r wid; do
+        [ "$wid" != "$original_window" ] && tmux kill-window -t "$wid"
+    done
 
     # Create new windows from config
     local in_windows=false
@@ -408,9 +413,7 @@ function p() {
         return 1
     fi
 
-    # Switch to first new window, then kill all old windows
+    # Switch to first new window, then remove the original window
     tmux select-window -t "$first_window"
-    echo "$old_windows" | while read -r wid; do
-        tmux kill-window -t "$wid"
-    done
+    tmux kill-window -t "$original_window"
 }
