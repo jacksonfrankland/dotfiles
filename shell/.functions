@@ -349,6 +349,28 @@ function clog() {
     echo '' > /opt/homebrew/var/log/php-fpm.log
 }
 
+function i365() {
+    nvm use --lts
+    composer i
+    npm i
+    mprocs 'cd frontend; npm run serve;' 'npm run dev;' 'npx storybook dev -p 6006 --no-open' 'tail -f storage/logs/laravel.log' 'php artisan horizon' 'watch php artisan queue:monitor urgent,schedule,workflows,default,invites,database,coles,reports,cache,extended,idle'
+}
+
+function link-i365() {
+    local dir_name="$(basename "$PWD")"
+
+    cp /Users/jacksonfrankland/Code/informed365/.env .env
+    sed -i '' "s|informed365\.test|${dir_name}.test|g" .env
+    cp /Users/jacksonfrankland/Code/informed365/frontend/.env frontend/.env
+    sed -i '' "s|informed365\.test|${dir_name}.test|g" frontend/.env
+    mkdir -p storage/logs && touch storage/logs/laravel.log
+    herd secure
+    composer install
+    nvm use --lts
+    npm install
+    (cd frontend && npm install)
+}
+
 function p() {
     local config=".p.conf"
 

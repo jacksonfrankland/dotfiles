@@ -267,9 +267,8 @@ if.app-id = 'de.beyondco.herd'
 run = 'move-node-to-workspace O'
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-# run = ['move-node-to-workspace T', 'layout accordion']
-run = ['move-node-to-workspace T']
+if.app-id = 'app.supabit.supacode'
+run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'

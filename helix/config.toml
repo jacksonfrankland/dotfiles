@@ -113,3 +113,7 @@ F = "file_picker_in_current_buffer_directory" # useful for accessing sibling fil
 [keys.normal.g]
 "left" = "goto_line_start"
 "right" = "goto_line_end"
+
+[keys.select.g]
+"left" = "goto_line_start"
+"right" = "goto_line_end"

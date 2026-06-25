@@ -1,58 +1,73 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run the `open default settings` command
-// from the command palette or from `Zed` application menu.
 {
+    "outline_panel": {
+        "dock": "left"
+    },
+    "collaboration_panel": {
+        "dock": "left"
+    },
+    "git_panel": {
+        "dock": "left"
+    },
     "terminal": {
-        "dock": "right",
+        "dock": "right"
     },
     "format_on_save": "on",
     "completions": {
-        "words_min_length": 0,
+        "words_min_length": 0
     },
     "show_edit_predictions": false,
-    "ui_font_weight": 400.0,
+    "ui_font_weight": 400,
     "project_panel": {
-        "dock": "left",
+        "dock": "left"
     },
     "tab_size": 4,
     "agent": {
+        "dock": "right",
         "inline_assistant_model": {
             "provider": "openrouter",
-            "model": "anthropic/claude-opus-4.5",
+            "model": "anthropic/claude-opus-4.5"
         },
         "default_model": {
             "provider": "copilot_chat",
-            "model": "claude-sonnet-4",
+            "model": "claude-sonnet-4"
         },
-        "model_parameters": [],
+        "model_parameters": []
     },
     "agent_servers": {
-        "claude-acp": {
-            "type": "registry",
-            "favorite_config_option_values": {
-                "model": ["opus"],
-            },
+        "github-copilot-cli": {
+            "type": "registry"
         },
+        "claude-acp": {
+            "default_config_options": {
+                "model": "sonnet",
+                "mode": "bypassPermissions"
+            },
+            "favorite_config_option_values": {
+                "mode": [
+                    "bypassPermissions"
+                ]
+            },
+            "type": "registry"
+        }
     },
     "theme": {
         "mode": "dark",
-        "dark": "Catppuccin Frappé",
-        "light": "Catppuccin Latte",
+        "dark": "Catppuccin Frapp\u00e9",
+        "light": "Catppuccin Latte"
     },
     "vim_mode": true,
-    "ui_font_size": 15.0,
-    "buffer_font_size": 12.0,
-    "buffer_line_height": { "custom": 2 },
+    "ui_font_size": 15,
+    "buffer_font_size": 12,
+    "buffer_line_height": {
+        "custom": 2
+    },
     "autosave": "on_focus_change",
     "buffer_font_family": "JetBrainsMono Nerd Font",
     "git": {
         "git_gutter": "tracked_files",
-        "inline_blame": { "enabled": true },
+        "inline_blame": {
+            "enabled": true
+        }
     },
     "diagnostics": {
         "button": true,
@@ -62,22 +77,28 @@
             "update_debounce_ms": 150,
             "padding": 4,
             "min_column": 0,
-            "max_severity": null,
-        },
+            "max_severity": null
+        }
     },
     "languages": {
-        "JSONC": { "tab_size": 4 },
+        "JSONC": {
+            "tab_size": 4
+        },
         "PHP": {
-            "language_servers": ["phptools", "!intelephense", "!phpactor"],
+            "language_servers": [
+                "phptools",
+                "!intelephense",
+                "!phpactor"
+            ],
             "formatter": {
                 "external": {
                     "command": "bash",
                     "arguments": [
                         "-c",
-                        "cat > {buffer_path} && ./vendor/bin/pint --quiet {buffer_path} && cat {buffer_path}",
-                    ],
-                },
-            },
+                        "cat > {buffer_path} && ./vendor/bin/pint --quiet {buffer_path} && cat {buffer_path}"
+                    ]
+                }
+            }
         },
         "Vue.js": {
             "formatter": {
@@ -91,32 +112,56 @@
                         "--parser",
                         "vue",
                         "--stdin-filepath",
-                        "{buffer_path}",
-                    ],
-                },
-            },
+                        "{buffer_path}"
+                    ]
+                }
+            }
         },
         "Svelte": {
-            "formatter": "prettier",
-        },
+            "formatter": "prettier"
+        }
     },
     "file_types": {
-        "PHP": ["*.php", "_ide_helper.php"],
-        "Blade": ["*.blade.php"],
-        "Shell Script": [".aliases", ".functions", ".exports"],
+        "PHP": [
+            "*.php",
+            "_ide_helper.php"
+        ],
+        "Blade": [
+            "*.blade.php"
+        ],
+        "Shell Script": [
+            ".aliases",
+            ".functions",
+            ".exports"
+        ]
     },
     "preferred_line_length": 120,
-    "tab_bar": { "show": false, "show_nav_history_buttons": false },
+    "tab_bar": {
+        "show": false,
+        "show_nav_history_buttons": false
+    },
     "vim": {
-        "toggle_relative_line_numbers": true,
+        "toggle_relative_line_numbers": true
     },
     "helix_mode": false,
     "lsp": {
         "phptools": {
             "initialization_options": {
             }
-            },
-        },
+            }
+        }
     },
-    "which_key": { "enabled": true },
+    "which_key": {
+        "enabled": true
+    },
+    "context_servers": {
+        "brain-informed365": {
+            "enabled": true,
+            "remote": false,
+            "command": "python3",
+            "args": [
+                "/Users/jacksonfrankland/Code/brain/core/modules/mcp_server.py"
+            ]
+        }
+    }
 }
