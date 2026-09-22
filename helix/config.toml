@@ -11,6 +11,7 @@ idle-timeout = 0
 # original gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 gutters = ["diagnostics", "spacer", "diff", "line-numbers", "spacer", "spacer"]
 indent-heuristic = "tree-sitter"
+completion-trigger-len = 1
 
 [editor.cursor-shape]
 insert = "bar"

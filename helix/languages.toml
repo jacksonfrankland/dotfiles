@@ -9,9 +9,6 @@ auto-format = false
 name = "toml"
 
 [[language]]
-name = "bash"
-
-[[language]]
 name = "php"
 language-servers = ["phptools"]
 auto-format = true
@@ -20,6 +17,8 @@ formatter = { command = "pint-fmt" }
 [language-server.phptools]
 command = "/Users/jacksonfrankland/Library/pnpm/devsense-php-ls"
 args = ["--stdio"]
+
+[language-server.phptools.config]
 
 [language-server.vuels]
 command = "vue-language-server"
@@ -56,9 +55,22 @@ name = "go"
 auto-format = true
 formatter = { command = "goimports" }
 
-[[languages]]
+[[language]]
 name = "bash"
+language-servers = ["bash-language-server"]
 file-types = ["sh", "bash", ".functions"]
+
+[language-server.bash-language-server]
+command = "bash-language-server"
+args = ["start"]
+
+[[language]]
+name = "gdscript"
+language-servers = ["godot"]
+
+[language-server.godot]
+command = "nc"
+args = ["localhost", "6005"]
 
 [[language]]
 name = "svelte"
