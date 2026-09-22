@@ -366,7 +366,7 @@ function link-i365() {
     mkdir -p storage/logs && touch storage/logs/laravel.log
     herd secure
     composer install
-    nvm use --lts
+    nvm use
     npm install
     (cd frontend && npm install)
 }
