@@ -271,6 +271,31 @@ if.app-id = 'app.supabit.supacode'
 run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
+if.app-id = 'com.defold.editor'
+if.window-title-regex-substring = '^space-golf$'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'NULL-APP-BUNDLE-ID'
+run = 'move-node-to-workspace Z'
+
+[[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
 # run = ['move-node-to-workspace T', 'layout accordion']
 run = ['move-node-to-workspace D']
+
+[[on-window-detected]]
+if.app-id = 'com.tarmslitaren.frosthavenAssistant'
+run = 'layout floating'
+
+# Godot editor's own window title always contains "Godot Engine"; a game
+# window spawned by Run/Build only shows the project name, so this rule
+# lets the editor stay tiled while catching everything else below.
+[[on-window-detected]]
+if.app-id = 'org.godotengine.godot'
+if.window-title-regex-substring = 'Godot Engine'
+run = ['layout tiling', 'move-node-to-workspace O']
+
+[[on-window-detected]]
+if.app-id = 'org.godotengine.godot'
+run = 'layout floating'
