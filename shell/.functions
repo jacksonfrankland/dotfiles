@@ -371,6 +371,79 @@ function link-i365() {
     (cd frontend && npm install)
 }
 
+# pick an in-progress Jira ticket assigned to you and create a Supacode
+# worktree + branch for it, e.g. feature/proj-123-fix-login-bug
+# requires: `acli jira auth login --web` to have been run once (brew: atlassian/acli/acli)
+function jw() {
+	local selected key summary branch_type slug dir_slug branch worktree_id default_branch worktree_path
+
+	selected="$(acli jira workitem search \
+		--jql "assignee = currentUser() AND status = 'In Progress' ORDER BY updated DESC" \
+		--fields "key,summary" --json \
+		| jq -r '.[] | ((.key // .fields.key // "")) as $k | ((.summary // .fields.summary // "")) as $s | [$k, $s] | @tsv' \
+		| fzf --prompt='Ticket> ')"
+	[ -z "$selected" ] && return 1
+
+	key="$(printf '%s' "$selected" | cut -f1)"
+	summary="$(printf '%s' "$selected" | cut -f2-)"
+
+	branch_type="$(printf 'feature\nhotfix\n' | fzf --prompt='Type> ')"
+	[ -z "$branch_type" ] && return 1
+
+	slug="${key}-$(printf '%s' "$summary" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g')"
+	branch="${branch_type}/${slug}"
+	dir_slug="$(printf '%s' "$slug" | tr '[:upper:]' '[:lower:]')"
+
+	default_branch="$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')"
+	default_branch="${default_branch:-main}"
+
+	worktree_id="$(supacode repo worktree-new --branch "$branch" --name "$dir_slug" \
+		--base "origin/${default_branch}" --no-upstream --fetch)"
+	[ -z "$worktree_id" ] && { echo "failed to create worktree"; return 1; }
+
+	worktree_path="$(printf '%b' "${worktree_id//%/\\x}")"
+	git -C "$worktree_path" push -u origin HEAD
+
+	echo "created worktree '$dir_slug' on branch '$branch'"
+
+	supacode worktree focus -w "$worktree_id"
+	[ -n "$SUPACODE_IS_SCRIPT" ] && supacode tab close -t "$SUPACODE_TAB_ID" --background
+}
+
+# pick a ticket you're assigned to code review, pick its connected PR, and
+# create a Supacode worktree checked out to that PR's branch, e.g. review-1234
+# requires: `acli jira auth login --web` and `gh auth login` to have been run once
+function jcr() {
+	local selected key summary picked_pr pr_number pr_branch worktree_id
+
+	selected="$(acli jira workitem search \
+		--jql '"Code review" = currentUser() AND statusCategory != Done ORDER BY updated DESC' \
+		--fields "key,summary" --json \
+		| jq -r '.[] | ((.key // .fields.key // "")) as $k | ((.summary // .fields.summary // "")) as $s | [$k, $s] | @tsv' \
+		| fzf --prompt='Ticket> ')"
+	[ -z "$selected" ] && return 1
+
+	key="$(printf '%s' "$selected" | cut -f1)"
+	summary="$(printf '%s' "$selected" | cut -f2-)"
+
+	picked_pr="$(gh pr list --state open --limit 100 --json number,title,headRefName \
+		| jq -r --arg k "$key" '.[] | select((.title | test($k; "i")) or (.headRefName | test($k; "i"))) | [.number, .headRefName, .title] | @tsv' \
+		| fzf --prompt='PR> ')"
+	[ -z "$picked_pr" ] && return 1
+
+	pr_number="$(printf '%s' "$picked_pr" | cut -f1)"
+	pr_branch="$(printf '%s' "$picked_pr" | cut -f2)"
+
+	worktree_id="$(supacode repo worktree-new --branch "$pr_branch" --name "review-${pr_number}" \
+		--base "origin/${pr_branch}" --upstream "origin/${pr_branch}" --fetch)"
+	[ -z "$worktree_id" ] && { echo "failed to create worktree"; return 1; }
+
+	echo "created review worktree 'review-${pr_number}' on branch '$pr_branch' (PR #$pr_number)"
+
+	supacode worktree focus -w "$worktree_id"
+	[ -n "$SUPACODE_IS_SCRIPT" ] && supacode tab close -t "$SUPACODE_TAB_ID" --background
+}
+
 function p() {
     local config=".p.conf"
 

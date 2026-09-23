@@ -1,4 +1,5 @@
 alias updatebrewfile='brew bundle dump -f'
+alias dfiles='source ~/.zshrc'
 alias ll='eza --long --header --git -a'
 alias cat='bat'
 alias vim='nvim'
@@ -36,5 +37,3 @@ alias phpunit='vendor/bin/phpunit --log-junit $(echo ${phpunitdir:-scratch})/php
 
 # pest
 alias pest='./vendor/bin/pest'
-
-
