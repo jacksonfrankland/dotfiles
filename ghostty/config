@@ -1,3 +1,4 @@
+macos-option-as-alt = true
 adjust-cell-height = 50%
 theme = "Catppuccin Frappe"
 split-divider-color = #51576d
