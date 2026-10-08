@@ -64,3 +64,15 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # Added by Antigravity
 export PATH="/Users/jacksonfrankland/.antigravity/antigravity/bin:$PATH"
+# Use the work Claude account (default ~/.claude) inside informed365 directories, personal elsewhere
+_claude_account_for_pwd() {
+  case "$PWD/" in
+    "$HOME/.supacode/repos/informed365/"*|"$HOME/Code/informed365/"*)
+      unset CLAUDE_CONFIG_DIR ;;
+    *)
+      export CLAUDE_CONFIG_DIR="$HOME/.claude-personal" ;;
+  esac
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _claude_account_for_pwd
+_claude_account_for_pwd
