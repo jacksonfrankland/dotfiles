@@ -371,6 +371,12 @@ function link-i365() {
     (cd frontend && npm install)
 }
 
+# cap a worktree directory name at 64 characters (longer names break Herd),
+# trimming any trailing hyphen left by the cut
+function _worktree_dir_name() {
+	printf '%s' "$1" | cut -c1-64 | sed -E 's/-+$//'
+}
+
 # pick an in-progress Jira ticket assigned to you and create a Supacode
 # worktree + branch for it, e.g. feature/proj-123-fix-login-bug
 # requires: `acli jira auth login --web` to have been run once (brew: atlassian/acli/acli)
@@ -392,7 +398,7 @@ function jw() {
 
 	slug="${key}-$(printf '%s' "$summary" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g')"
 	branch="${branch_type}/${slug}"
-	dir_slug="$(printf '%s' "$slug" | tr '[:upper:]' '[:lower:]')"
+	dir_slug="$(_worktree_dir_name "$(printf '%s' "$slug" | tr '[:upper:]' '[:lower:]')")"
 
 	default_branch="$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')"
 	default_branch="${default_branch:-main}"
@@ -414,7 +420,7 @@ function jw() {
 # create a Supacode worktree checked out to that PR's branch, e.g. review-1234
 # requires: `acli jira auth login --web` and `gh auth login` to have been run once
 function jcr() {
-	local selected key summary picked_pr pr_number pr_branch worktree_id
+	local selected key summary picked_pr pr_number pr_branch dir_name worktree_id
 
 	selected="$(acli jira workitem search \
 		--jql '"Code review" = currentUser() AND statusCategory != Done ORDER BY updated DESC' \
@@ -434,11 +440,13 @@ function jcr() {
 	pr_number="$(printf '%s' "$picked_pr" | cut -f1)"
 	pr_branch="$(printf '%s' "$picked_pr" | cut -f2)"
 
-	worktree_id="$(supacode repo worktree-new --branch "$pr_branch" --name "review-${pr_number}" \
+	dir_name="$(_worktree_dir_name "review-${pr_number}")"
+
+	worktree_id="$(supacode repo worktree-new --branch "$pr_branch" --name "$dir_name" \
 		--base "origin/${pr_branch}" --upstream "origin/${pr_branch}" --fetch)"
 	[ -z "$worktree_id" ] && { echo "failed to create worktree"; return 1; }
 
-	echo "created review worktree 'review-${pr_number}' on branch '$pr_branch' (PR #$pr_number)"
+	echo "created review worktree '$dir_name' on branch '$pr_branch' (PR #$pr_number)"
 
 	supacode worktree focus -w "$worktree_id"
 	[ -n "$SUPACODE_IS_SCRIPT" ] && supacode tab close -t "$SUPACODE_TAB_ID" --background
