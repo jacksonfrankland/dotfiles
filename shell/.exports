@@ -5,9 +5,12 @@ export BAT_THEME="Catppuccin-frappe"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/usr/local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+export PATH="/Applications/Muxy.app/Contents/MacOS:$PATH"
 
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$HOME/Library/pnpm:$PATH"
+export PATH="$PNPM_HOME/bin:$PATH"
 export SECRETS_BASE="$HOME/code/.secrets"
 export DEVSENSE_PHP_LS_LICENSE=$(cat "$SECRETS_BASE/devsense-license")
 

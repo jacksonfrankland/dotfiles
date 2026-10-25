@@ -71,6 +71,10 @@ ln -s "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
 rm -rf "$HOME/.config/zed/keymap.json"
 ln -s "$DOTFILES/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 
+mkdir -p "$HOME/.config/muxy"
+rm -rf "$HOME/.config/muxy/worktree.json"
+ln -s "$DOTFILES/muxy/worktree.json" "$HOME/.config/muxy/worktree.json"
+
 
 rm -rf "$HOME/.aliases"
 ln -s "$DOTFILES/shell/.aliases" "$HOME/.aliases"
@@ -99,6 +103,12 @@ source "$HOME/.zshrc"
 
 mkdir -p "$HOME/.local/share/zsh/completions"
 refreshcompletions
+
+if ! command -v vp >/dev/null; then
+    echo 'Installing Vite+...'
+    curl -fsSL https://vite.plus | bash
+    echo 'Done installing Vite+.'
+fi
 
 mkdir -p "$HOME/Library/pnpm"
 pnpm add -g svelte-language-server typescript typescript-language-server @vue/language-server@2.2.0 @vue/typescript-plugin@2.2.0 devsense-php-ls

@@ -64,10 +64,22 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # Added by Antigravity
 export PATH="/Users/jacksonfrankland/.antigravity/antigravity/bin:$PATH"
+
+
+# Herd injected PHP 8.5 configuration.
+export HERD_PHP_85_INI_SCAN_DIR="/Users/jacksonfrankland/Library/Application Support/Herd/config/php/85/"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+# Unity CLI
+. "/Users/jacksonfrankland/.unity/env"
+
 # Use the work Claude account (default ~/.claude) inside informed365 directories, personal elsewhere
 _claude_account_for_pwd() {
   case "$PWD/" in
-    "$HOME/.supacode/repos/informed365/"*|"$HOME/Code/informed365/"*)
+    "$HOME/Code/worktrees/informed365/"*|"$HOME/Code/informed365/"*)
       unset CLAUDE_CONFIG_DIR ;;
     *)
       export CLAUDE_CONFIG_DIR="$HOME/.claude-personal" ;;
@@ -76,3 +88,6 @@ _claude_account_for_pwd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd _claude_account_for_pwd
 _claude_account_for_pwd
+
+# Vite+ bin (https://viteplus.dev)
+. "/Users/jacksonfrankland/.config/vite-plus/env"

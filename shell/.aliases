@@ -1,6 +1,8 @@
 alias updatebrewfile='brew bundle dump -f'
 alias dfiles='source ~/.zshrc'
 alias ll='eza --long --header --git -a'
+alias llt='ll -rs modified'
+alias llrt='ll -s modified'
 alias cat='bat'
 alias vim='nvim'
 alias sshgen='ssh-keygen -t rsa'

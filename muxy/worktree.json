@@ -1,0 +1,5 @@
+{
+  "setup": [
+    "zsh -c 'source ~/.zshrc && worktree-setup'"
+  ]
+}

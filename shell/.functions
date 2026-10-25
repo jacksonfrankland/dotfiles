@@ -359,12 +359,22 @@ function i365() {
 function link-i365() {
     local dir_name="$(basename "$PWD")"
 
+    # host = as much of the directory name as fits, so <host>.test stays within the
+    # 64-character certificate limit (59 + ".test"). When trimming, drop a partial
+    # trailing word rather than leaving "...-wor".
+    local host="$(printf '%s' "$dir_name" | cut -c1-59)"
+    if [ "${#dir_name}" -gt 59 ] && [ "${dir_name:59:1}" != "-" ]; then
+        host="${host%-*}"
+    fi
+    host="$(printf '%s' "$host" | sed -E 's/-+$//')"
+
     cp /Users/jacksonfrankland/Code/informed365/.env .env
-    sed -i '' "s|informed365\.test|${dir_name}.test|g" .env
+    sed -i '' "s|informed365\.test|${host}.test|g" .env
     cp /Users/jacksonfrankland/Code/informed365/frontend/.env frontend/.env
-    sed -i '' "s|informed365\.test|${dir_name}.test|g" frontend/.env
+    sed -i '' "s|informed365\.test|${host}.test|g" frontend/.env
     mkdir -p storage/logs && touch storage/logs/laravel.log
-    herd secure
+    herd link "$host"
+    herd secure "$host"
     composer install
     nvm use
     npm install
@@ -377,11 +387,52 @@ function _worktree_dir_name() {
 	printf '%s' "$1" | cut -c1-64 | sed -E 's/-+$//'
 }
 
-# pick an in-progress Jira ticket assigned to you and create a Supacode
+# the main checkout of the current repo, even when run from inside a worktree
+function _repo_root() {
+	local common_dir
+	common_dir="$(git rev-parse --path-format=absolute --git-common-dir)" || return 1
+	dirname "$common_dir"
+}
+
+# per-repo setup for a freshly created worktree, run from inside it. Called by
+# jw/jcr, and by the Muxy setup hook (muxy/worktree.json) for worktrees made in
+# the app, which runs it for every repo
+function worktree-setup() {
+	case "$(_repo_root)" in
+		"$HOME/Code/informed365") link-i365 ;;
+	esac
+}
+
+# create a Muxy worktree project for the repo in the current directory, in
+# ~/Code/worktrees/<repo>/<name>, and run worktree-setup in it. Muxy's own
+# --hooks would hide the setup output, so it runs here instead. Prints the new
+# worktree's directory
+# usage: _muxy_worktree_new <name> <branch> <base>
+function _muxy_worktree_new() {
+	local root worktree_path
+	root="$(_repo_root)" || return 1
+	muxy project add "$root" --reuse >/dev/null || return 1
+
+	worktree_path="$(muxy worktree create "$root" "$1" --branch "$2" --base "$3" \
+		--directory "$HOME/Code/worktrees/$(basename "$root")/$1" --json | jq -r '.directory // empty')"
+	[ -z "$worktree_path" ] && { echo "failed to create worktree" >&2; return 1; }
+
+	(cd "$worktree_path" && worktree-setup) >&2
+	printf '%s' "$worktree_path"
+}
+
+# when run as a Muxy custom command (MUXY_IS_SCRIPT=1), end the terminal it ran
+# in so its tab closes itself
+function _muxy_close_script_tab() {
+	[ -z "$MUXY_IS_SCRIPT" ] || [ -z "$MUXY_SESSION_ID" ] && return 0
+	muxy session end "$MUXY_SESSION_ID" --yes
+}
+
+# pick an in-progress Jira ticket assigned to you and create a Muxy
 # worktree + branch for it, e.g. feature/proj-123-fix-login-bug
 # requires: `acli jira auth login --web` to have been run once (brew: atlassian/acli/acli)
 function jw() {
-	local selected key summary branch_type slug dir_slug branch worktree_id default_branch worktree_path
+	local selected key summary branch_type slug dir_slug branch default_branch worktree_path
 
 	selected="$(acli jira workitem search \
 		--jql "assignee = currentUser() AND status = 'In Progress' ORDER BY updated DESC" \
@@ -403,24 +454,21 @@ function jw() {
 	default_branch="$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')"
 	default_branch="${default_branch:-main}"
 
-	worktree_id="$(supacode repo worktree-new --branch "$branch" --name "$dir_slug" \
-		--base "origin/${default_branch}" --no-upstream --fetch)"
-	[ -z "$worktree_id" ] && { echo "failed to create worktree"; return 1; }
-
-	worktree_path="$(printf '%b' "${worktree_id//%/\\x}")"
+	git fetch origin "$default_branch" || return 1
+	worktree_path="$(_muxy_worktree_new "$dir_slug" "$branch" "origin/${default_branch}")" || return 1
 	git -C "$worktree_path" push -u origin HEAD
 
 	echo "created worktree '$dir_slug' on branch '$branch'"
 
-	supacode worktree focus -w "$worktree_id"
-	[ -n "$SUPACODE_IS_SCRIPT" ] && supacode tab close -t "$SUPACODE_TAB_ID" --background
+	muxy "$worktree_path"
+	_muxy_close_script_tab
 }
 
 # pick a ticket you're assigned to code review, pick its connected PR, and
-# create a Supacode worktree checked out to that PR's branch, e.g. review-1234
+# create a Muxy worktree checked out to that PR's branch, e.g. review-1234
 # requires: `acli jira auth login --web` and `gh auth login` to have been run once
 function jcr() {
-	local selected key summary picked_pr pr_number pr_branch dir_name worktree_id
+	local selected key summary picked_pr pr_number pr_branch dir_name worktree_path
 
 	selected="$(acli jira workitem search \
 		--jql '"Code review" = currentUser() AND statusCategory != Done ORDER BY updated DESC' \
@@ -442,14 +490,14 @@ function jcr() {
 
 	dir_name="$(_worktree_dir_name "review-${pr_number}")"
 
-	worktree_id="$(supacode repo worktree-new --branch "$pr_branch" --name "$dir_name" \
-		--base "origin/${pr_branch}" --upstream "origin/${pr_branch}" --fetch)"
-	[ -z "$worktree_id" ] && { echo "failed to create worktree"; return 1; }
+	git fetch origin "$pr_branch" || return 1
+	worktree_path="$(_muxy_worktree_new "$dir_name" "$pr_branch" "origin/${pr_branch}")" || return 1
+	git -C "$worktree_path" branch --set-upstream-to "origin/${pr_branch}"
 
 	echo "created review worktree '$dir_name' on branch '$pr_branch' (PR #$pr_number)"
 
-	supacode worktree focus -w "$worktree_id"
-	[ -n "$SUPACODE_IS_SCRIPT" ] && supacode tab close -t "$SUPACODE_TAB_ID" --background
+	muxy "$worktree_path"
+	_muxy_close_script_tab
 }
 
 function p() {
