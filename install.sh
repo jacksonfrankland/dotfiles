@@ -65,6 +65,9 @@ ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 rm -rf "$HOME/.config/helix"
 ln -s "$DOTFILES/helix" "$HOME/.config/helix"
 
+rm -rf "$HOME/.config/rex"
+ln -s "$DOTFILES/rex" "$HOME/.config/rex"
+
 mkdir -p "$HOME/.config/zed"
 rm -rf "$HOME/.config/zed/settings.json"
 ln -s "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
