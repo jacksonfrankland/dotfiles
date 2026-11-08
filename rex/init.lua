@@ -56,5 +56,18 @@ rex.action{
   end,
 }
 
+-- Open informed365 Jira tickets you're assigned to or reviewing, with a
+-- worktree and session for each. See ticket-picker.sh.
+rex.action{
+  name     = "ticket_picker",
+  title    = "Open Ticket Worktree…",
+  category = "Session",
+  keywords = "jira ticket review worktree informed365 fzf session",
+  run      = function(ctx, args)
+    float{ config_dir .. "/ticket-picker.sh" }
+  end,
+}
+
 rex.bind("cmd+o", "project_picker")
+rex.bind("shift+cmd+j", "ticket_picker")
 rex.bind("shift+cmd+o", "worktree_picker")
