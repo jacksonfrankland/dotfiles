@@ -279,6 +279,10 @@ if.app-id = 'com.muxy.app'
 run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
+if.app-id = 'com.superlogical.rex'
+run = 'move-node-to-workspace T'
+
+[[on-window-detected]]
 if.app-id = 'com.defold.editor'
 if.window-title-regex-substring = '^space-golf$'
 run = 'layout floating'
