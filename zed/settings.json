@@ -132,10 +132,9 @@
 	},
 	"helix_mode": false,
 	"lsp": {
+		// The license key comes from DEVSENSE_PHP_LS_LICENSE, set in shell/.zshrc
 		"phptools": {
-			"initialization_options": {
-    },
-			},
+			"initialization_options": {},
 		},
 	},
 	"which_key": {

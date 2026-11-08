@@ -114,7 +114,8 @@ if ! command -v vp >/dev/null; then
 fi
 
 mkdir -p "$HOME/Library/pnpm"
-pnpm add -g svelte-language-server typescript typescript-language-server @vue/language-server@2.2.0 @vue/typescript-plugin@2.2.0 devsense-php-ls
+pnpm add -g devsense-php-ls
+pnpm install --dir "$DOTFILES/helix/lsp"
 pnpm self-update
 #    You may need to run this for zsh completions
 #    autoload -Uz zsh-newuser-install && zsh-newuser-install -f

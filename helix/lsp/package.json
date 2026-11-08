@@ -1,0 +1,12 @@
+{
+  "name": "helix-lsp",
+  "private": true,
+  "description": "TypeScript, Vue and Svelte language servers for Helix, at fixed paths that languages.toml can point to",
+  "dependencies": {
+    "@vue/language-server": "2.2.0",
+    "@vue/typescript-plugin": "2.2.0",
+    "svelte-language-server": "^0.18.5",
+    "typescript": "~6.0.3",
+    "typescript-language-server": "^6.0.2"
+  }
+}

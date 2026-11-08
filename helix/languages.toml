@@ -1,9 +1,49 @@
 [language-server]
 biome = { command = "biome", args = ["lsp-proxy"] }
 
+# Web languages format with Vite+ (vp fmt, i.e. Oxfmt) at 4-space indents, set
+# in helix/oxfmtrc.json. It overrides any formatter config in the project
 [[language]]
 name = "json"
 auto-format = false
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "typescript"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "css"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
+
+[[language]]
+name = "scss"
+auto-format = true
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
 
 [[language]]
 name = "toml"
@@ -18,18 +58,27 @@ formatter = { command = "pint-fmt" }
 command = "/Users/jacksonfrankland/Library/pnpm/devsense-php-ls"
 args = ["--stdio"]
 
+# The license key comes from DEVSENSE_PHP_LS_LICENSE, set in shell/.zshrc
 [language-server.phptools.config]
 
+# TypeScript, Vue and Svelte servers come from helix/lsp (installed by install.sh), not
+# pnpm globals: TypeScript 7 has no tsserver, and pnpm 11+ global paths change
+# on every reinstall
 [language-server.vuels]
-command = "vue-language-server"
+command = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/.bin/vue-language-server"
 args = ["--stdio"]
 timeout = 60
 
 [language-server.vuels.config]
-typescript = { tsdk = "/Users/jacksonfrankland/Library/pnpm/global/5/node_modules/typescript/lib" }
+typescript = { tsdk = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/typescript/lib" }
+
+[language-server.typescript-language-server]
+command = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/.bin/typescript-language-server"
+args = ["--stdio"]
 
 [language-server.typescript-language-server.config]
-plugins = [{ name = "@vue/typescript-plugin", location = "/Users/jacksonfrankland/Library/pnpm/global/5/node_modules/@vue/typescript-plugin", languages = ["vue"] }]
+tsserver = { path = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/typescript/lib/tsserver.js" }
+plugins = [{ name = "@vue/typescript-plugin", location = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/@vue/typescript-plugin", languages = ["vue"] }]
 
 [[language]]
 name = "vue"
@@ -38,7 +87,8 @@ language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
   { name = "vuels", except-features = ["diagnostics", "completion"] },
 ]
-formatter = { command = 'prettier', args = ["--tab-width", "4", "--single-quote", "--no-semi", "--parser", "vue"] } 
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
 # formatter = { command = "pnpm", args = ["exec","biome","check", "--stdin-file-path=%{buffer_name}", "--write"] }
 [language-server.emmet-language-server]
 command = "emmet-language-server"
@@ -48,7 +98,8 @@ args = ["--stdio"]
 name = "html"
 auto-format = true
 language-servers = ["vscode-html-language-server", "emmet-language-server", "tailwindcss-ls"]
-formatter = { command = "prettier", args = ["--parser", "html"] }
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "/Users/jacksonfrankland/.local/share/vite-plus/bin/vp", args = ["fmt", "--stdin-filepath=%{buffer_name}", "--config=/Users/jacksonfrankland/Code/dotfiles/helix/oxfmtrc.json"] }
 
 [[languages]]
 name = "go"
@@ -86,4 +137,10 @@ language-servers = [
   # "eslint",
   "tailwindcss-ls",
 ]
-formatter = { command = "prettier", args = ["--plugin", "prettier-plugin-svelte", "--parser", "svelte"] }
+# no formatter: svelteserver formats with its bundled Prettier, following the
+# project's Prettier config if it has one, else this 4-space indent
+indent = { tab-width = 4, unit = "    " }
+
+[language-server.svelteserver]
+command = "/Users/jacksonfrankland/Code/dotfiles/helix/lsp/node_modules/.bin/svelteserver"
+args = ["--stdio"]

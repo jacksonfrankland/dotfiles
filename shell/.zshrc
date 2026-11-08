@@ -89,5 +89,12 @@ autoload -Uz add-zsh-hook
 add-zsh-hook chpwd _claude_account_for_pwd
 _claude_account_for_pwd
 
+# The 1Password login that _i365_1password_add_url adds informed365 worktree URLs to
+export I365_1PASSWORD_ITEM="iinlaxkkwaw5j6snvxztebnjda"
+
+# Devsense PHP language server license (Helix and Zed), kept out of this public repo
+[ -r "$HOME/Code/.secrets/devsense-license" ] &&
+    export DEVSENSE_PHP_LS_LICENSE="$(tr -d '[:space:]' < "$HOME/Code/.secrets/devsense-license")"
+
 # Vite+ bin (https://viteplus.dev)
 . "/Users/jacksonfrankland/.config/vite-plus/env"
