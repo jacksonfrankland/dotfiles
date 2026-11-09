@@ -8,6 +8,10 @@
 # opened from), whether it's the main checkout (~/Code/PROJECT/...) or a
 # worktree (~/Code/worktrees/PROJECT/WORKTREE/...). If that doesn't name a
 # project with worktrees, the session label is used, up to its first "/".
+#
+# Worktrees are listed most recently opened first (see recent-sessions.sh),
+# then the never-opened ones alphabetically. The current session goes last,
+# since you're already there.
 
 code="$HOME/Code"
 worktrees="$code/worktrees"
@@ -37,7 +41,7 @@ if [ -z "$project" ] || [ ! -d "$worktrees/$project" ]; then
 fi
 
 dir=$(find "$worktrees/$project" -mindepth 1 -maxdepth 1 -type d ! -name '.*' |
-  sort -f |
+  "$(dirname "$0")/recent-sessions.sh" sort "$project" "$label" |
   fzf --prompt="$project worktree> " --delimiter=/ --with-nth=-2.. --reverse) || exit 0
 
 exec "$(dirname "$0")/open-session.sh" "$project/$(basename "$dir")" "$dir"

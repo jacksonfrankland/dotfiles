@@ -4,6 +4,9 @@
 # When the session is created, SETUP (a shell command line) is typed into
 # its terminal, so it runs where you can watch it.
 # Shared by project-picker.sh, worktree-picker.sh and ticket-picker.sh.
+#
+# Each switch is logged to recent-sessions.sh's file, since Rex doesn't
+# record when a session was last shown. The worktree picker sorts by it.
 
 name=$1
 dir=$2
@@ -22,6 +25,22 @@ id=$(rex ls --json | jq -r --arg n "$name" \
   '.sessions[] | select((.label | ascii_downcase) == ($n | ascii_downcase)) | .session_id' |
   head -n 1)
 
+# Otherwise reuse a session with a terminal already in DIR (or below it),
+# whatever it's called, so a session made some other way isn't duplicated.
+if [ -z "$id" ]; then
+  id=$(rex ls --json | jq -r '.sessions[].session_id' | while read -r s; do
+    rex api call -s "$s" session.view |
+      jq -r '[.. | objects | select(has("block_id")) | .block_id] | unique | .[]' |
+      while read -r b; do
+        cwd=$(rex do -s "$s" com.superlogical.terminal.process block_id="$b" 2>/dev/null |
+          jq -r '.foreground.cwd // empty')
+        case "$cwd" in
+          ("$dir" | "$dir"/*) echo "$s" ;;
+        esac
+      done
+  done | head -n 1)
+fi
+
 if [ -z "$id" ]; then
   id=$(rex new "$name" --cwd "$dir" --json | jq -r '.session_id')
   [ -n "$id" ] || fail "Couldn't create session $name."
@@ -31,3 +50,4 @@ if [ -z "$id" ]; then
 fi
 
 rex do session.select session_id="$id" || fail "Couldn't switch to session $name."
+"$(dirname "$0")/recent-sessions.sh" touch "$name"
