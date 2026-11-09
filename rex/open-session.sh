@@ -32,7 +32,8 @@ if [ -z "$id" ]; then
     rex api call -s "$s" session.view |
       jq -r '[.. | objects | select(has("block_id")) | .block_id] | unique | .[]' |
       while read -r b; do
-        cwd=$(rex do -s "$s" com.superlogical.terminal.process block_id="$b" 2>/dev/null |
+        # -b, not block_id=, which rex do ignores in favour of the focused pane.
+        cwd=$(rex do -s "$s" -b "$b" com.superlogical.terminal.process 2>/dev/null |
           jq -r '.foreground.cwd // empty')
         case "$cwd" in
           ("$dir" | "$dir"/*) echo "$s" ;;

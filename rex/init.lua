@@ -68,6 +68,49 @@ rex.action{
   end,
 }
 
+-- informed365's run command (run-i365 in shell/.functions) in a tab named
+-- "run", for the checkout or worktree of the focused pane. If the session
+-- already has a "run" tab, switch to it instead.
+local i365 = os.getenv("HOME") .. "/Code/informed365"
+local i365_worktrees = os.getenv("HOME") .. "/Code/worktrees/informed365/"
+
+rex.action{
+  name     = "run_informed",
+  title    = "Run informed365",
+  category = "Session",
+  keywords = "run informed365 build watch dev server",
+  run      = function(ctx, args)
+    local view = rex.session.view{}
+    for _, w in ipairs((view and view.windows) or {}) do
+      if w.label == "run" then
+        local _, err = rex.session.focus_window{ window_id = w.window_id }
+        if err ~= nil then error(err, 0) end
+        return
+      end
+    end
+
+    local cwd = focused_cwd(ctx)
+    local r = cwd ~= "" and rex.exec({ "git", "rev-parse", "--show-toplevel" }, { cwd = cwd })
+    local root = (r and r.ok and r.stdout:gsub("\n$", "")) or ""
+    local is_i365 = root == i365
+      or (root:sub(1, #i365_worktrees) == i365_worktrees and not root:find("/", #i365_worktrees + 1))
+    if not is_i365 then
+      error("Run informed365: the focused pane isn't in an informed365 checkout or worktree", 0)
+    end
+
+    -- An interactive zsh loads run-i365; the shell stays after it stops.
+    local _, err = rex.session.new_window{
+      window_label = "run",
+      layout = rex.layout.block{
+        flavor  = terminal .. ".shell",
+        options = { cwd = root, command = { "zsh", "-ic", "run-i365; exec zsh" } },
+      },
+    }
+    if err ~= nil then error(err, 0) end
+  end,
+}
+
 rex.bind("cmd+o", "project_picker")
+rex.bind("cmd+r", "run_informed")
 rex.bind("shift+cmd+j", "ticket_picker")
 rex.bind("shift+cmd+o", "worktree_picker")

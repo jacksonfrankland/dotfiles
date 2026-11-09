@@ -404,6 +404,22 @@ function _i365_1password_add_url() {
     return $result
 }
 
+# run informed365 from the current checkout or worktree: add its APP_URL to the
+# 1Password login (see _i365_1password_add_url), then watch the build. Rex's
+# run_informed action (cmd+r) opens this in a "run" tab
+function run-i365() {
+	local root url
+	root="$(git rev-parse --show-toplevel)" || return 1
+	cd "$root" || return 1
+	url="$(sed -n 's/^APP_URL=//p' .env 2>/dev/null | tr -d "\"'" | head -n 1)"
+	if [ -n "$url" ]; then
+		_i365_1password_add_url "$url"
+	else
+		echo "1Password: skipped, no APP_URL in $root/.env" >&2
+	fi
+	php artisan build watch
+}
+
 # cap a worktree directory name at 64 characters (longer names break Herd),
 # trimming any trailing hyphen left by the cut
 function _worktree_dir_name() {
