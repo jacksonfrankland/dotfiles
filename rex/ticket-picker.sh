@@ -13,7 +13,7 @@
 # 2. Otherwise a branch named after the ticket is checked out, such as the
 #    one under review. If there are several, you pick one.
 # 3. Otherwise (your own tickets only) a new feature/ or hotfix/ branch is
-#    made from origin's default branch and pushed.
+#    made from a base branch you pick (main by default) and pushed.
 # A new session runs `worktree-setup` (composer, `php artisan
 # worktree:setup`, npm; see shell/.functions) then `herd secure`.
 #
@@ -145,8 +145,17 @@ else
     *) fail "No branch mentions $key yet, so there's nothing to review." ;;
   esac
   type=$(printf 'feature\nhotfix\n' | fzf --prompt='type> ' --reverse) || exit 0
-  base=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|^refs/remotes/origin/||')
-  base=${base:-main}
+  # The base branch: any of origin's, with main (origin's default) listed
+  # first so Enter picks it.
+  default=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|^refs/remotes/origin/||')
+  default=${default:-main}
+  base=$(
+    {
+      echo "$default"
+      git for-each-ref --sort=-committerdate --format='%(refname:lstrip=3)' refs/remotes/origin |
+        grep -vx -e HEAD -e "$default"
+    } | fzf --prompt='base> ' --header="Enter for $default" --reverse
+  ) || exit 0
   branch="$type/$slug"
   git worktree add -b "$branch" "$dir" "origin/$base" ||
     fail "Couldn't create the worktree on a new $branch."
