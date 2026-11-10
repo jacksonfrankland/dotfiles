@@ -50,5 +50,10 @@ if [ -z "$id" ]; then
   fi
 fi
 
+# A session whose tabs have all been closed shows nothing, so give it one.
+if [ "$(rex session inspect "$id" --json | jq '.windows | length')" = 0 ]; then
+  rex window new -s "$id" -c "$dir" >/dev/null || fail "Couldn't open a tab in $name."
+fi
+
 rex do session.select session_id="$id" || fail "Couldn't switch to session $name."
 "$(dirname "$0")/recent-sessions.sh" touch "$name"
