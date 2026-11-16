@@ -404,6 +404,36 @@ function _i365_1password_add_url() {
     return $result
 }
 
+# remove a URL that _i365_1password_add_url added to the 1Password login named
+# by I365_1PASSWORD_ITEM, if it's there. Rex's delete_worktree action calls this
+# for a worktree's APP_URL
+# usage: _i365_1password_remove_url <url>
+function _i365_1password_remove_url() {
+    local url="$1" item="$I365_1PASSWORD_ITEM" tmp result
+
+    if [ -z "$item" ] || ! command -v op >/dev/null; then
+        echo "1Password: skipped removing $url (needs the op CLI and I365_1PASSWORD_ITEM set)" >&2
+        return 0
+    fi
+
+    if ! op item get "$item" --format json | jq -e --arg u "$url" 'any(.urls[]?; .href == $u)' >/dev/null; then
+        echo "1Password: '$item' doesn't have $url"
+        return 0
+    fi
+
+    # As in _i365_1password_add_url, the template holds secrets, so it lives
+    # in a private temp dir only as long as the edit takes.
+    tmp="$(mktemp -d)" || return 1
+    chmod 700 "$tmp"
+    op item get "$item" --format json \
+        | jq --arg u "$url" '.urls = [(.urls // [])[] | select(.href != $u)]' > "$tmp/item.json" \
+        && op item edit "$item" --template "$tmp/item.json" >/dev/null \
+        && echo "1Password: removed $url from '$item'"
+    result=$?
+    rm -rf "$tmp"
+    return $result
+}
+
 # run informed365 from the current checkout or worktree: add its APP_URL to the
 # 1Password login (see _i365_1password_add_url), then watch the build. Rex's
 # run_informed action (cmd+r) opens this in a "run" tab

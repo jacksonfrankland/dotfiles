@@ -68,6 +68,18 @@ rex.action{
   end,
 }
 
+-- Delete an informed365 worktree, with its sessions and Herd site, after
+-- a confirmation. See worktree-delete-picker.sh.
+rex.action{
+  name     = "delete_worktree",
+  title    = "Delete informed365 Worktree…",
+  category = "Session",
+  keywords = "delete remove worktree informed365 fzf session kill",
+  run      = function(ctx, args)
+    float{ config_dir .. "/worktree-delete-picker.sh" }
+  end,
+}
+
 -- informed365's run command (run-i365 in shell/.functions) in a tab named
 -- "run", for the checkout or worktree of the focused pane. If the session
 -- already has a "run" tab, switch to it instead.
